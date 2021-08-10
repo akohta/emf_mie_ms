@@ -32,7 +32,7 @@ For exampe, '../mie_ms_solver exms.dat', '../example2.out exms.dat' ( run in 'mu
 The I_example2.pdf in this folder is the visualization result of intensity distributions. 
 
 
-### Appendix for radiation analysis  
+### Appendix for radiation force analysis  
 The code in the folder 'appendix' is the radiation force analysis program for optical trapping. 
 Usage is 'make' and './radiation_force.out'.
 The radiation_force.pdf is the visualization result of radiation forces, created by the Gnuplot script 'gscript_radiation_force.plt'.
