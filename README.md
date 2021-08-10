@@ -20,7 +20,7 @@ The electromagnetic field analysis program "multi_fbeam" is used to analyze inci
    This executable ( source code is example2.c ) calculates electric field intensity distributions, outputs them to text files.  
   The I_example2.pdf is the visualization result of intensity distributions, created by the Gnuplot script 'gscript_example2.plt'.
    
-Please see 'exmie_src/emf_mie_ms.h' for detail of functions, 'mfb_src/multi_fbeam.h' for detail of incident fields. 　
+Please see 'exmie_src/emf_mie_ms.h' for detail of functions, 'mfb_src/multi_fbeam.h' for detail of incident fields. 
 The 'mie_ms_solver' is parallelized using OpenMP. The number of threads is controlled by the environment variable 'OMP_NUM_THREADS'.
 
 
