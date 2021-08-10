@@ -2,6 +2,7 @@
 This is the electromagnetic field analysis program for spherical particles. This is based on Mie scattering theory. 
 This program can analyze multiple scattering between spheres by using iterative solutions. 
 The electromagnetic field analysis program "multi_fbeam" is used to analyze incident field. 
+GNU Scientific Library is required.
 
 ## Usage of example code
 
