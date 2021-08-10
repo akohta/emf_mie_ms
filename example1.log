@@ -1,0 +1,48 @@
+ "fpw.txt" No.00 -- focused plane wave --
+wave length of incident beam in vacuum   [m]:       1.064e-06
+refractive index of surrounding             :            1.33
+numerical aperture                          :             1.2
+incident beam power                      [W]:           0.001
+x-component of polarization coefficient     :0.70711+      0i
+y-component of polarization coefficient     :      0+0.70711i
+x-component of translation vector        [m]:               0
+y-component of translation vector        [m]:               0
+z-component of translation vector        [m]:               0
+rotation parameter theta               [rad]:               0
+rotation parameter phi                 [rad]:               0
+gauss-legendre integration sampling number  :              64
+
+---- sphere data ( msphr.txt ) ----
+number of spheres                             :                1
+  Sphere ID 0
+radius of sphere                           [m]:          2.5e-06
+refractive index of sphere                    :     1.6+  1e-06i
+x-coordinate of sphere center              [m]:                0
+y-coordinate of sphere center              [m]:                0
+z-coordinate of sphere center              [m]:                0
+basic sampling number on sphere surface       :               32
+division number for sphere surface    (per PI):                4
+limit of order number l                       :               40
+
+Electromagnetic field at r=(  0, 0,-1.5e-06 )
+Ex = -1.72887509840823e+05 -8.42004550993913e+04 I
+Ey =  8.41558301795319e+04 -1.72978017004565e+05 I
+Ez = -2.22694463445674e-02 -1.43990399259924e-02 I
+Hx = -1.89991805571947e+02 +6.20858519555695e+02 I
+Hy = -6.21209594931966e+02 -1.89832626942494e+02 I
+Hz = -8.20732945548497e-05 +7.24462507358653e-05 I
+Real electromagnetic field at t=1e-08
+Ex = -3.91825696135841e+04
+Ey = -1.88343970524038e+05
+Ez = -8.49160733225771e-03
+Hx =  6.48500644806654e+02
+Hy = -3.15258611566273e+01
+Hz =  9.03772172206492e-05
+
+Radiation force and torque
+Mie coefficient
+sphere id  0, F=(  5.5085241911743e-30,-2.766201969565e-30, 1.9166986011839e-14 ) [ N ]
+           0, N=(  1.6814190873767e-39, 1.5645136558504e-39, 2.5119184362186e-23 ) [N m]
+Surface integral
+sphere id  0, F=(  6.5800860256748e-28, 4.5456366696761e-28, 1.9166986011836e-14 ) [ N ]
+           0, N=( -4.3392198466254e-34,-3.9444080283826e-35, 2.5119184363958e-23 ) [N m]
