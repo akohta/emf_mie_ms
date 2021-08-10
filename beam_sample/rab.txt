@@ -1,0 +1,6 @@
+## focused radially and azimuthally polarized beam
+#number of beams
+2
+#lambda0 ni NA power real(e0r) imag(e0r) real(e0a) imag(e0a) fx fy fz theta phi sn
+1.064e-6 1.33 1.2 1.0e-3 1.0 0.0 0.0 0.0 +1.0e-6 0.0e-6 0.0 0.0 0.0 64
+1.064e-6 1.33 1.2 1.0e-3 0.0 0.0 1.0 0.0 -1.0e-6 0.0e-6 0.0 0.0 0.0 64

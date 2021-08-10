@@ -1,0 +1,6 @@
+## Spiral phase modulated Bessel beam 
+# number of beams
+2
+#lambda0 ni d_angle power real(e0x) imag(e0x) real(e0y) imag(e0y) fx fy fz theta phi mode_n
+1.064e-6 1.33 0.698131701 1.0e6 1.0 0.0 0.0 0.0 +0.65e-6 0.0e-6 0.0 0.0 0.0 +2
+1.064e-6 1.33 0.698131701 1.0e6 1.0 0.0 0.0 0.0 -0.65e-6 0.0e-6 0.0 0.0 0.0 -2
