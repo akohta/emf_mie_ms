@@ -18,8 +18,8 @@ GNU Scientific Library is required.
    This is the simplest example using this code. 
    
 4. type './example2.out' with a argument of datafile name. For example, './example2.out ex.dat'.  
-   This executable ( source code is example2.c ) calculates electric field intensity distributions, outputs them to text files.  
-  The I_example2.pdf is the visualization result of intensity distributions, created by the Gnuplot script 'gscript_example2.plt'.
+   This executable ( source code is example2.c ) calculates electric field intensity distributions, outputs them to text files.
+   The I_example2.pdf is the visualization result of intensity distributions, created by the Gnuplot script 'gscript_example2.plt'.
    
 Please see 'exmie_src/emf_mie_ms.h' for detail of functions, 'mfb_src/multi_fbeam.h' for detail of incident fields. 
 The 'mie_ms_solver' is parallelized using OpenMP. The number of threads is controlled by the environment variable 'OMP_NUM_THREADS'.
@@ -44,6 +44,7 @@ The radiation_force.pdf is the visualization result of radiation forces, created
 2. Barton, J. P., D. R. Alexander, and S. A. Schaub. "Theoretical determination of net radiation force and torque for a spherical particle illuminated by a focused laser beam." Journal of Applied Physics 66.10 (1989): 4594-4602.  
 3. Barton, John P., et al. "Electromagnetic field for a beam incident on two adjacent spherical particles." Applied optics 30.33 (1991): 4706-4715.  
 4. Abramowitz, Milton, and Irene A. Stegun, eds. Handbook of mathematical functions with formulas, graphs, and mathematical tables. Vol. 55. US Government printing office, 1948.  
+5. The electromagnetic field analysis program [multi_fbeam](https://github.com/akohta/multi_fbeam/)  
 
 The formula (12) in the Reference 2 ( z-component of radiation torque ) is misprinted. The following formula is correct.  
 <img src="https://latex.codecogs.com/gif.latex?\frac{\left<N_z\right>}{a^3E_0^2}=-\frac{a}{8\pi}\sum_{l=1}^{\infty}\sum_{m=-l}^{l}l(l+1)m\left[\epsilon_{\mathrm{ext}}|a_{lm}|^2+|b_{lm}|^2+\Re(\epsilon_{\mathrm{ext}}a_{lm}A_{lm}^*+b_{lm}B_{lm}^*)\right]">.  
