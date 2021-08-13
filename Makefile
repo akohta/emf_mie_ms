@@ -1,4 +1,4 @@
-# Makefile for intel C compiler  
+# Makefile for gcc  
 CC      =gcc
 CFLAGS  =-O3 -Wall
 LDFLAGS =-lm -lgsl -lgslcblas
