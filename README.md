@@ -14,15 +14,33 @@ GNU Scientific Library is required.
    The sphere datafile 'msphr.txt' ( defined by default ) is searched in current directory and loaded automatically. 
    
 3. type './example1.out' with a argument of datafile name. For example, './example1.out ex.dat'.  
-   This executable ( source code is example1.c ) calculates electromagnetic field and radiation force.  
+   This executable ( source code is example1.c ) calculates electromagnetic field, radiation force and torque.  
    This is the simplest example using this code. 
    
 4. type './example2.out' with a argument of datafile name. For example, './example2.out ex.dat'.  
    This executable ( source code is example2.c ) calculates electric field intensity distributions, outputs them to text files.
-   The I_example2.pdf is the visualization result of intensity distributions, created by the Gnuplot script 'gscript_example2.plt'.
+   The I_example2.pdf is the visualization result of electromagnetic field intensity distributions, created by the Gnuplot script 'gscript_example2.plt'.
    
 Please see 'exmie_src/emf_mie_ms.h' for detail of functions, 'mfb_src/multi_fbeam.h' for detail of incident fields. 
 The 'mie_ms_solver' is parallelized using OpenMP. The number of threads is controlled by the environment variable 'OMP_NUM_THREADS'.
+
+
+## System of units
+
+This program use the own defined system of units (OSU), optimized for optics. 
+The system of units is defined as <img src="https://latex.codecogs.com/gif.latex?c_0=1"> ( speed of light in vacuum ), 
+<img src="https://latex.codecogs.com/gif.latex?\mu_0=1"> ( permeability of vacuum ). 
+For the conversion from OSU to MKSA system of units, the unit of length in OSU is defined as 
+<img src="https://latex.codecogs.com/gif.latex?1\times10^{-6}"> [m] in MKSA, the unit of power in OSU is defined as
+<img src="https://latex.codecogs.com/gif.latex?1\times10^{-3}"> [W] in MKSA. The conversions of base unit are follows.  
+<img src="https://latex.codecogs.com/gif.latex?a=1\times10^{-6}">,  
+<img src="https://latex.codecogs.com/gif.latex?b=1\times10^{-3}">,  
+<img src="https://latex.codecogs.com/gif.latex?a\,\mathrm{[m]}=1\,\mathrm{[L]}">,  
+<img src="https://latex.codecogs.com/gif.latex?\frac{ab}{c_0^3}\,\mathrm{[kg]}=1\,\mathrm{[M]}">,  
+<img src="https://latex.codecogs.com/gif.latex?\frac{a}{c_0}\,\mathrm{[s]}=1\,\mathrm{[T]}">,  
+<img src="https://latex.codecogs.com/gif.latex?\sqrt{\frac{b}{c_0\mu_0}}\,\mathrm{[A]}=1\,\mathrm{[I]}">.  
+Please see com_src/osu_mksa.h and com_src/osu_mksa.c for detail of conversions.
+
 
 
 ### Example of multi-spheres
