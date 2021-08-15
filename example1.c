@@ -8,46 +8,64 @@ void force_torque_integral(int i,double *vf,double *vn,MSPD *msp);
 int main(int argc,char *argv[]) 
 {
   MSPD msp;
-  double complex e[3],h[3],cet;
+  double complex e[3],h[3],cet,fv;
   double vf[3],vn[3],r[3],t;
   int i;
   
   read_dat_ms(argv[1],&msp); // read data file
   print_data_ms(&msp);       // print data
+  print_data_ms_mksa(&msp);  // print data in MKSA system of units
   
-  r[0]= 0.0e-6; // set x-coordinate 
-  r[1]= 0.0e-6; // set y-coordinate
-  r[2]=-1.5e-6; // set z-coordinate
+  r[0]= 0.0; // set x-coordinate 
+  r[1]= 0.0; // set y-coordinate
+  r[2]=-1.5; // set z-coordinate
   total_EH_ms(e,h,r,&msp); // calclation of total field ( add incident field to scattered field )
   printf("Electromagnetic field at r=( % g,% g,% g )\n",r[0],r[1],r[2]);
-  printf("Ex = % 15.14e %+15.14e I\n",creal(e[0]),cimag(e[0]));
-  printf("Ey = % 15.14e %+15.14e I\n",creal(e[1]),cimag(e[1]));
-  printf("Ez = % 15.14e %+15.14e I\n",creal(e[2]),cimag(e[2]));
-  printf("Hx = % 15.14e %+15.14e I\n",creal(h[0]),cimag(h[0]));
-  printf("Hy = % 15.14e %+15.14e I\n",creal(h[1]),cimag(h[1]));
-  printf("Hz = % 15.14e %+15.14e I\n",creal(h[2]),cimag(h[2]));
+  fv=OSUtoMKSA_ElectricField(e[0]);
+  printf("Ex = % 15.14e %+15.14e I (=% 15.14e %+15.14e I [V/m](MKSA))\n",creal(e[0]),cimag(e[0]),creal(fv),cimag(fv));
+  fv=OSUtoMKSA_ElectricField(e[1]);
+  printf("Ey = % 15.14e %+15.14e I (=% 15.14e %+15.14e I [V/m](MKSA))\n",creal(e[1]),cimag(e[1]),creal(fv),cimag(fv));
+  fv=OSUtoMKSA_ElectricField(e[2]);
+  printf("Ez = % 15.14e %+15.14e I (=% 15.14e %+15.14e I [V/m](MKSA))\n",creal(e[2]),cimag(e[2]),creal(fv),cimag(fv));
+  fv=OSUtoMKSA_MagneticField(h[0]);
+  printf("Hx = % 15.14e %+15.14e I (=% 15.14e %+15.14e I [A/m](MKSA))\n",creal(h[0]),cimag(h[0]),creal(fv),cimag(fv));
+  fv=OSUtoMKSA_MagneticField(h[1]);
+  printf("Hy = % 15.14e %+15.14e I (=% 15.14e %+15.14e I [A/m](MKSA))\n",creal(h[1]),cimag(h[1]),creal(fv),cimag(fv));
+  fv=OSUtoMKSA_MagneticField(h[2]);
+  printf("Hz = % 15.14e %+15.14e I (=% 15.14e %+15.14e I [A/m](MKSA))\n",creal(h[2]),cimag(h[2]),creal(fv),cimag(fv));
   
-  t=1.0e-8; // set time 
+  t=1.0e-3; // set time 
   cet=cexp(-I*msp.bm.omega*t);
   printf("Real electromagnetic field at t=%g\n",t);
-  printf("Ex = % 15.14e\n",creal(e[0]*cet));
-  printf("Ey = % 15.14e\n",creal(e[1]*cet));
-  printf("Ez = % 15.14e\n",creal(e[2]*cet));
-  printf("Hx = % 15.14e\n",creal(h[0]*cet));
-  printf("Hy = % 15.14e\n",creal(h[1]*cet));
-  printf("Hz = % 15.14e\n",creal(h[2]*cet));
+  fv=OSUtoMKSA_ElectricField(e[0]*cet);
+  printf("Ex = % 15.14e (=% 15.14e [V/m](MKSA))\n",creal(e[0]*cet),creal(fv));
+  fv=OSUtoMKSA_ElectricField(e[1]*cet);
+  printf("Ey = % 15.14e (=% 15.14e [V/m](MKSA))\n",creal(e[1]*cet),creal(fv));
+  fv=OSUtoMKSA_ElectricField(e[2]*cet);
+  printf("Ez = % 15.14e (=% 15.14e [V/m](MKSA))\n",creal(e[2]*cet),creal(fv));
+  fv=OSUtoMKSA_MagneticField(h[0]*cet);
+  printf("Hx = % 15.14e (=% 15.14e [A/m](MKSA))\n",creal(h[0]*cet),creal(fv));
+  fv=OSUtoMKSA_MagneticField(h[1]*cet);
+  printf("Hy = % 15.14e (=% 15.14e [A/m](MKSA))\n",creal(h[1]*cet),creal(fv));
+  fv=OSUtoMKSA_MagneticField(h[2]*cet);
+  printf("Hz = % 15.14e (=% 15.14e [A/m](MSKA))\n",creal(h[2]*cet),creal(fv));
   printf("\n");
   
   printf("Radiation force and torque\n");
   for(i=0;i<msp.n_sphr;i++){
     force_torque_ms(i,vf,vn,&msp);
     printf("Mie coefficient\n");
-    printf("sphere id %2d, F=( % 15.14g,% 15.14g,% 15.14g ) [ N ]\n",i,vf[0],vf[1],vf[2]);
-    printf("          %2d, N=( % 15.14g,% 15.14g,% 15.14g ) [N m]\n",i,vn[0],vn[1],vn[2]);
-    force_torque_integral(i,vf,vn,&msp); // for verification 
+    printf("sphere id %2d, F=( % 15.14g,% 15.14g,% 15.14g )\n",i,vf[0],vf[1],vf[2]);
+    printf("          %2d, N=( % 15.14g,% 15.14g,% 15.14g )\n",i,vn[0],vn[1],vn[2]);
+    printf("          %2d, F=( % 15.14g,% 15.14g,% 15.14g ) [ N ](MKSA)\n",i,OSUtoMKSA_Force(vf[0]),OSUtoMKSA_Force(vf[1]),OSUtoMKSA_Force(vf[2]));
+    printf("          %2d, N=( % 15.14g,% 15.14g,% 15.14g ) [N m](MKSA)\n",i,OSUtoMKSA_Torque(vn[0]),OSUtoMKSA_Torque(vn[1]),OSUtoMKSA_Torque(vn[2]));
+    
     printf("Surface integral\n");
+    force_torque_integral(i,vf,vn,&msp); // for verification 
     printf("sphere id %2d, F=( % 15.14g,% 15.14g,% 15.14g ) [ N ]\n",i,vf[0],vf[1],vf[2]);
     printf("          %2d, N=( % 15.14g,% 15.14g,% 15.14g ) [N m]\n",i,vn[0],vn[1],vn[2]);
+    printf("          %2d, F=( % 15.14g,% 15.14g,% 15.14g ) [ N ](MKSA)\n",i,OSUtoMKSA_Force(vf[0]),OSUtoMKSA_Force(vf[1]),OSUtoMKSA_Force(vf[2]));
+    printf("          %2d, N=( % 15.14g,% 15.14g,% 15.14g ) [N m](MKSA)\n",i,OSUtoMKSA_Torque(vn[0]),OSUtoMKSA_Torque(vn[1]),OSUtoMKSA_Torque(vn[2]));
   }
   
   free_ms(&msp); // free allocated memory
@@ -71,8 +89,8 @@ void force_torque_integral(int id,double *vf,double *vn,MSPD *msp)
     return;
   }
     
-  eps=msp->bm.n_0*msp->bm.n_0*epsilon0;
-  mu=mu0;
+  eps=msp->bm.n_0*msp->bm.n_0;
+  mu=1.0;
   
   gauleg(0.0,M_PI,xt,wt,nc);
   gauleg(0.0,2*M_PI,xp,wp,nc*2);

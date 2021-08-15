@@ -9,6 +9,7 @@
 #include "multi_fbeam.h"
 #include "rctbess.h"
 #include "gsl/gsl_specfunc.h"
+#include "osu_mksa.h"
 
 // default sphere datafile name
 #define fn_sphr "msphr.txt"
@@ -48,11 +49,12 @@ typedef struct sphere_objects{
 }MSPD;
 
 // ---- emf_mie_ms.c ----
-void  read_data_ms(MSPD *msp);    // seach the sphere datafile (defined fn_sphr) and load 
-void print_data_ms(MSPD *msp);    // print loaded data 
-void setup_ms(MSPD *msp);         // allocate memory and setup coefficients
-void  free_ms(MSPD *msp);         // free allocated memory
-void iterative_ops_ms(MSPD *msp); // solve multiple scattering
+void  read_data_ms(MSPD *msp);     // seach the sphere datafile (defined fn_sphr) and load 
+void print_data_ms(MSPD *msp);     // print loaded data 
+void print_data_ms_mksa(MSPD *msp);// print loaded data in MKSA system of units
+void setup_ms(MSPD *msp);          // allocate memory and setup coefficients
+void  free_ms(MSPD *msp);          // free allocated memory
+void iterative_ops_ms(MSPD *msp);  // solve multiple scattering
 
 // ---- emf_mie_ms_field.c ----
 void  incident_EH_ms(double complex *e,double complex *h,double *r,MSPD *msp); // calculate incident field 

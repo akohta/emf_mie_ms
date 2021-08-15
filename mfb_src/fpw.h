@@ -6,8 +6,10 @@
 #include <math.h>
 #include <complex.h>
 #include <string.h>
-#include "const.h"
+#include "mfb_const.h"
 #include "gauleg.h"
+#include "osu_mksa.h"
+#include "my_utils.h"
 
 
 typedef struct fpw_data{
@@ -39,11 +41,14 @@ typedef struct fpw{
   FpwD data;
 }Fpw;
 
-void read_data_fpw(char *rfile,Fpw *fpw);
 void print_data_fpw(Fpw *fpw);
+void print_data_fpw_mksa(Fpw *fpw);
 void setup_Fpw(Fpw *fpw);  // calculate parameter and memory allocation
 void free_Fpw(Fpw *fpw);   // memory free 
 
 void calc_fpw_EH(double complex *e,double complex *h,double *x,Fpw *fpw);
+void calc_fpw_EH_dv(double complex *e,double complex *h,double complex *dedv,double complex *dhdv,double *x,double *v,Fpw *fpw);
+// directional devirative ( define : df/dv=df/dx v_x + df/dy v_y + df/fz v_z )
+// dedv[0]=dE_x/dv, dedv[1]=dE_y/dv, dedv[2]=dE_z/dv, dhdv[0]=dH_x/dv, dhdv[1]=dH_y/dv, dhdv[2]=dH_z/dv
 
 #endif

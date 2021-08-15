@@ -6,7 +6,9 @@
 #include <math.h>
 #include <complex.h>
 #include <string.h>
-#include "const.h"
+#include "mfb_const.h"
+#include "osu_mksa.h"
+#include "my_utils.h"
 
 typedef struct bsb_data{
   double ki;             // wave number 
@@ -33,11 +35,14 @@ typedef struct bsb{
   BsbD data;
 }Bsb;
 
-void read_data_bsb(char *rfile,Bsb *bsb);
 void print_data_bsb(Bsb *bsb);
+void print_data_bsb_mksa(Bsb *bsb);
 void setup_Bsb(Bsb *bsb);  // calculate coefficient and memory allocation 
 void free_Bsb(Bsb *bsb);   // memory free
 
 void calc_bsb_EH(double complex *e,double complex *h,double *x,Bsb *bsb);
+void calc_bsb_EH_dv(double complex *e,double complex *h,double complex *dedv,double complex *dhdv,double *x,double *v,Bsb *bsb);
+// directional devirative ( define : df/dv=df/dx v_x + df/dy v_y + df/fz v_z )
+// dedv[0]=dE_x/dv, dedv[1]=dE_y/dv, dedv[2]=dE_z/dv, dhdv[0]=dH_x/dv, dhdv[1]=dH_y/dv, dhdv[2]=dH_z/dv
 
 #endif
