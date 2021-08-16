@@ -1,7 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <complex.h>
 #include "rctbess.h"
 
 int msta1(double x,int mp)
@@ -213,10 +209,10 @@ void rctyc(int n,double _Complex z,int *mn,double _Complex *ry,double _Complex *
 
 void rcth1d(int n,double x,int *mn,double _Complex *ch,double _Complex *dch)
 {
-  double *psi =(double *)malloc(sizeof(double)*(n+1));
-  double *dpsi=(double *)malloc(sizeof(double)*(n+1));
-  double *chi =(double *)malloc(sizeof(double)*(n+1));
-  double *dchi=(double *)malloc(sizeof(double)*(n+1));
+  double *psi =(double *)malloc(sizeof(double)*(n+1)); if( psi==NULL){ printf("failed to allocate memory. rctbess.c,rcth1d(),psi. Exit...\n"); exit(1);}
+  double *dpsi=(double *)malloc(sizeof(double)*(n+1)); if(dpsi==NULL){ printf("failed to allocate memory. rctbess.c,rcth1d(),dpsi. Exit...\n"); exit(1);}
+  double *chi =(double *)malloc(sizeof(double)*(n+1)); if( chi==NULL){ printf("failed to allocate memory. rctbess.c,rcth1d(),chi. Exit...\n"); exit(1);}
+  double *dchi=(double *)malloc(sizeof(double)*(n+1)); if(dchi==NULL){ printf("failed to allocate memory. rctbess.c,rcth1d(),dchi. Exit...\n"); exit(1);}
   int nj,ny,i;
   for(i=0;i<=n;i++){
     ch[i]=0.0;    dch[i]=0.0;
@@ -234,10 +230,10 @@ void rcth1d(int n,double x,int *mn,double _Complex *ch,double _Complex *dch)
 
 void rcth2d(int n,double x,int *mn,double _Complex *ch,double _Complex *dch)
 {
-  double *psi =(double *)malloc(sizeof(double)*(n+1));
-  double *dpsi=(double *)malloc(sizeof(double)*(n+1));
-  double *chi =(double *)malloc(sizeof(double)*(n+1));
-  double *dchi=(double *)malloc(sizeof(double)*(n+1));
+  double *psi =(double *)malloc(sizeof(double)*(n+1)); if( psi==NULL){ printf("failed to allocate memory. rctbess.c,rcth2d(),psi. Exit...\n"); exit(1);}
+  double *dpsi=(double *)malloc(sizeof(double)*(n+1)); if(dpsi==NULL){ printf("failed to allocate memory. rctbess.c,rcth2d(),dpsi. Exit...\n"); exit(1);}
+  double *chi =(double *)malloc(sizeof(double)*(n+1)); if( chi==NULL){ printf("failed to allocate memory. rctbess.c,rcth2d(),chi. Exit...\n"); exit(1);}
+  double *dchi=(double *)malloc(sizeof(double)*(n+1)); if(dchi==NULL){ printf("failed to allocate memory. rctbess.c,rcth2d(),dchi. Exit...\n"); exit(1);}
   int nj,ny,i;
   for(i=0;i<=n;i++){
     ch[i]=0.0;    dch[i]=0.0;
@@ -255,10 +251,10 @@ void rcth2d(int n,double x,int *mn,double _Complex *ch,double _Complex *dch)
 
 void rcth1c(int n,double _Complex z,int *mn,double _Complex *ch,double _Complex *dch)
 {
-  double _Complex *psi =(double _Complex *)malloc(sizeof(double _Complex)*(n+1));
-  double _Complex *dpsi=(double _Complex *)malloc(sizeof(double _Complex)*(n+1));
-  double _Complex *chi =(double _Complex *)malloc(sizeof(double _Complex)*(n+1));
-  double _Complex *dchi=(double _Complex *)malloc(sizeof(double _Complex)*(n+1));
+  double _Complex *psi =(double _Complex *)malloc(sizeof(double _Complex)*(n+1)); if( psi==NULL){ printf("failed to allocate memory. rctbess.c,rcth1c(),psi. Exit...\n"); exit(1);}
+  double _Complex *dpsi=(double _Complex *)malloc(sizeof(double _Complex)*(n+1)); if(dpsi==NULL){ printf("failed to allocate memory. rctbess.c,rcth1c(),dpsi. Exit...\n"); exit(1);}
+  double _Complex *chi =(double _Complex *)malloc(sizeof(double _Complex)*(n+1)); if( chi==NULL){ printf("failed to allocate memory. rctbess.c,rcth1c(),chi. Exit...\n"); exit(1);}
+  double _Complex *dchi=(double _Complex *)malloc(sizeof(double _Complex)*(n+1)); if(dchi==NULL){ printf("failed to allocate memory. rctbess.c,rcth1c(),dchi. Exit...\n"); exit(1);}
   int nj,ny,i;
   for(i=0;i<=n;i++){
     ch[i]=0.0;    dch[i]=0.0;
@@ -276,10 +272,10 @@ void rcth1c(int n,double _Complex z,int *mn,double _Complex *ch,double _Complex 
 
 void rcth2c(int n,double _Complex z,int *mn,double _Complex *ch,double _Complex *dch)
 {
-  double _Complex *psi =(double _Complex *)malloc(sizeof(double _Complex)*(n+1));
-  double _Complex *dpsi=(double _Complex *)malloc(sizeof(double _Complex)*(n+1));
-  double _Complex *chi =(double _Complex *)malloc(sizeof(double _Complex)*(n+1));
-  double _Complex *dchi=(double _Complex *)malloc(sizeof(double _Complex)*(n+1));
+  double _Complex *psi =(double _Complex *)malloc(sizeof(double _Complex)*(n+1)); if( psi==NULL){ printf("failed to allocate memory. rctbess.c,rcth2c(),psi. Exit...\n"); exit(1);}
+  double _Complex *dpsi=(double _Complex *)malloc(sizeof(double _Complex)*(n+1)); if(dpsi==NULL){ printf("failed to allocate memory. rctbess.c,rcth2c(),dpsi. Exit...\n"); exit(1);}
+  double _Complex *chi =(double _Complex *)malloc(sizeof(double _Complex)*(n+1)); if( chi==NULL){ printf("failed to allocate memory. rctbess.c,rcth2c(),chi. Exit...\n"); exit(1);}
+  double _Complex *dchi=(double _Complex *)malloc(sizeof(double _Complex)*(n+1)); if(dchi==NULL){ printf("failed to allocate memory. rctbess.c,rcth2c(),dchi. Exit...\n"); exit(1);}
   int nj,ny,i;
   for(i=0;i<=n;i++){
     ch[i]=0.0;    dch[i]=0.0;

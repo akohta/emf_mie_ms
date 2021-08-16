@@ -6,8 +6,9 @@
 #include <math.h>
 #include <complex.h>
 #include <string.h>
-#include "const.h"
-
+#include "mfb_const.h"
+#include "osu_mksa.h"
+#include "my_utils.h"
 
 typedef struct bslgb_data{
   double ki;              // wave number 
@@ -35,11 +36,14 @@ typedef struct bslgb{
   BsLGbD data;
 }BsLGb;
 
-void read_data_bslgb(char *rfile,BsLGb *bsb);
 void print_data_bslgb(BsLGb *bsb);
+void print_data_bslgb_mksa(BsLGb *bsb);
 void setup_BsLGb(BsLGb *bsb);  // calculate coefficient and memory allocation 
 void free_BsLGb(BsLGb *bsb);   // memory free 
 
 void calc_bslgb_EH(double _Complex *e,double _Complex *h,double *x,BsLGb *bsb);
+void calc_bslgb_EH_dv(double complex *e,double complex *h,double complex *dedv,double complex *dhdv,double *x,double *v,BsLGb *bsb);
+// directional devirative ( define : df/dv=df/dx v_x + df/dy v_y + df/fz v_z )
+// dedv[0]=dE_x/dv, dedv[1]=dE_y/dv, dedv[2]=dE_z/dv, dhdv[0]=dH_x/dv, dhdv[1]=dH_y/dv, dhdv[2]=dH_z/dv
 
 #endif

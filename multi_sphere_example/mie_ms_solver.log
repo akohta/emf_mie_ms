@@ -1,41 +1,41 @@
  "ipw.txt" No.00 -- plane wave --
-wave length of incident beam in vacuum   [m]:       1.064e-06
+wave length of incident beam in vacuum      :           1.064
 refractive index of surrounding             :            1.33
-incident beam power                  [W/m^2]:         1000000
+incident beam power per unit area           :           0.001
 x-component of polarization coefficient     :      1+      0i
 y-component of polarization coefficient     :      0+      0i
-x-component of translation vector        [m]:               0
-y-component of translation vector        [m]:               0
-z-component of translation vector        [m]:               0
+x-component of translation vector           :               0
+y-component of translation vector           :               0
+z-component of translation vector           :               0
 rotation parameter theta               [rad]:               0
 rotation parameter phi                 [rad]:               0
 
 ---- sphere data ( msphr.txt ) ----
 number of spheres                             :                3
   Sphere ID 0
-radius of sphere                           [m]:          1.5e-06
+radius of sphere                              :              1.5
 refractive index of sphere                    :     1.6+  1e-06i
-x-coordinate of sphere center              [m]:         -1.5e-06
-y-coordinate of sphere center              [m]:                0
-z-coordinate of sphere center              [m]:                0
+x-coordinate of sphere center                 :             -1.5
+y-coordinate of sphere center                 :                0
+z-coordinate of sphere center                 :                0
 basic sampling number on sphere surface       :               32
 division number for sphere surface    (per PI):                4
 limit of order number l                       :               40
   Sphere ID 1
-radius of sphere                           [m]:          1.5e-06
+radius of sphere                              :              1.5
 refractive index of sphere                    :     1.6+  1e-06i
-x-coordinate of sphere center              [m]:          1.5e-06
-y-coordinate of sphere center              [m]:                0
-z-coordinate of sphere center              [m]:                0
+x-coordinate of sphere center                 :              1.5
+y-coordinate of sphere center                 :                0
+z-coordinate of sphere center                 :                0
 basic sampling number on sphere surface       :               32
 division number for sphere surface    (per PI):                4
 limit of order number l                       :               40
   Sphere ID 2
-radius of sphere                           [m]:          1.5e-06
+radius of sphere                              :              1.5
 refractive index of sphere                    :   0.129+   6.83i
-x-coordinate of sphere center              [m]:                0
-y-coordinate of sphere center              [m]:                0
-z-coordinate of sphere center              [m]:   2.59807622e-06
+x-coordinate of sphere center                 :                0
+y-coordinate of sphere center                 :                0
+z-coordinate of sphere center                 :       2.59807622
 basic sampling number on sphere surface       :               32
 division number for sphere surface    (per PI):                4
 limit of order number l                       :               40
@@ -57,21 +57,21 @@ iterative operation start (convergence criterion : cv < 1e-12)
  13, cv : 3.91877e-06	3.91877e-06	1.82943e-06	
  14, cv : 1.54469e-06	1.54469e-06	4.54804e-07	
  15, cv : 1.01885e-06	1.01885e-06	3.20074e-07	
- 16, cv : 2.17734e-07	2.17734e-07	9.99111e-09	
+ 16, cv : 2.17734e-07	2.17734e-07	9.99112e-09	
  17, cv : 2.33263e-07	2.33263e-07	5.22331e-08	
- 18, cv : 2.71887e-09	2.71887e-09	1.17728e-08	
- 19, cv : 5.4044e-08	5.4044e-08	6.44368e-09	
- 20, cv : 9.48992e-09	9.48992e-09	4.81976e-09	
- 21, cv : 1.12575e-08	1.12575e-08	2.08042e-10	
- 22, cv : 3.49386e-09	3.49386e-09	1.32005e-09	
- 23, cv : 1.89749e-09	1.8975e-09	1.83558e-10	
- 24, cv : 8.56553e-10	8.56553e-10	2.86687e-10	
- 25, cv : 2.20022e-10	2.20022e-10	7.39557e-11	
- 26, cv : 1.70432e-10	1.70436e-10	5.02441e-11	
- 27, cv : 1.76059e-12	1.76326e-12	1.94644e-11	
- 28, cv : 2.85589e-11	2.85613e-11	6.56541e-12	
- 29, cv : 8.21221e-12	8.21188e-12	4.162e-12	
- 30, cv : 3.76521e-12	3.76488e-12	3.4861e-13	
- 31, cv : 3.03113e-12	3.02824e-12	7.46736e-13	
- 32, cv : 2.46136e-13	2.47802e-13	1.40998e-13	
- 33, cv : 7.63056e-13	7.60725e-13	1.06803e-13	
+ 18, cv : 2.71886e-09	2.71886e-09	1.17728e-08	
+ 19, cv : 5.4044e-08	5.4044e-08	6.4437e-09	
+ 20, cv : 9.48994e-09	9.48993e-09	4.81974e-09	
+ 21, cv : 1.12575e-08	1.12575e-08	2.08057e-10	
+ 22, cv : 3.49385e-09	3.49386e-09	1.32004e-09	
+ 23, cv : 1.89749e-09	1.8975e-09	1.83555e-10	
+ 24, cv : 8.56555e-10	8.56557e-10	2.8668e-10	
+ 25, cv : 2.20017e-10	2.20017e-10	7.39488e-11	
+ 26, cv : 1.70435e-10	1.70438e-10	5.02356e-11	
+ 27, cv : 1.76681e-12	1.77169e-12	1.94573e-11	
+ 28, cv : 2.85545e-11	2.85534e-11	6.56497e-12	
+ 29, cv : 8.21321e-12	8.21343e-12	4.15867e-12	
+ 30, cv : 3.77187e-12	3.77287e-12	3.48721e-13	
+ 31, cv : 3.02558e-12	3.02847e-12	7.46736e-13	
+ 32, cv : 2.44804e-13	2.44915e-13	1.42109e-13	
+ 33, cv : 7.73603e-13	7.70717e-13	1.04583e-13	

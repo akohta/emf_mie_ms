@@ -1,7 +1,5 @@
 #include "emf_mie_ms.h"
 
-void *m_alloc2(size_t num,size_t size, char *txt); // malloc func 
-
 void  read_data_ms(MSPD *msp)
 {
   FILE *fp;
@@ -46,11 +44,36 @@ void print_data_ms(MSPD *msp)
   printf("number of spheres                             : %16d\n",msp->n_sphr);
   for(nc=0;nc<msp->n_sphr;nc++){
     printf("  Sphere ID %d\n",nc);
-    printf("radius of sphere                           [m]: %16.15g\n",msp->sp[nc].a);
+    printf("radius of sphere                              : %16.15g\n",msp->sp[nc].a);
     printf("refractive index of sphere                    : %7.6g+%7.6gi\n",creal(msp->sp[nc].ns),cimag(msp->sp[nc].ns));
-    printf("x-coordinate of sphere center              [m]: %16.15g\n",msp->sp[nc].xs);
-    printf("y-coordinate of sphere center              [m]: %16.15g\n",msp->sp[nc].ys);
-    printf("z-coordinate of sphere center              [m]: %16.15g\n",msp->sp[nc].zs);
+    printf("x-coordinate of sphere center                 : %16.15g\n",msp->sp[nc].xs);
+    printf("y-coordinate of sphere center                 : %16.15g\n",msp->sp[nc].ys);
+    printf("z-coordinate of sphere center                 : %16.15g\n",msp->sp[nc].zs);
+    printf("basic sampling number on sphere surface       : %16d\n",msp->sp[nc].bsn);
+    printf("division number for sphere surface    (per PI): %16d\n",msp->sp[nc].bdv);
+    printf("limit of order number l                       : %16d\n",msp->sp[nc].l_limit);
+  }
+  printf("\n");
+  
+  //printf("continue? (y/n) : ");  if(getchar()!='y'){ printf("Exit\n");  exit(0);}
+}
+
+void print_data_ms_mksa(MSPD *msp)
+{
+  int nc;
+  
+  print_data_mfb_mksa(&(msp->bm)); // print beam data
+
+  // print sphere data  
+  printf("---- sphere data ( %s ), MKSA system ----\n",fn_sphr);
+  printf("number of spheres                             : %16d\n",msp->n_sphr);
+  for(nc=0;nc<msp->n_sphr;nc++){
+    printf("  Sphere ID %d\n",nc);
+    printf("radius of sphere                           [m]: %16.15g\n",OSUtoMKSA_length(msp->sp[nc].a));
+    printf("refractive index of sphere                    : %7.6g+%7.6gi\n",creal(msp->sp[nc].ns),cimag(msp->sp[nc].ns));
+    printf("x-coordinate of sphere center              [m]: %16.15g\n",OSUtoMKSA_length(msp->sp[nc].xs));
+    printf("y-coordinate of sphere center              [m]: %16.15g\n",OSUtoMKSA_length(msp->sp[nc].ys));
+    printf("z-coordinate of sphere center              [m]: %16.15g\n",OSUtoMKSA_length(msp->sp[nc].zs));
     printf("basic sampling number on sphere surface       : %16d\n",msp->sp[nc].bsn);
     printf("division number for sphere surface    (per PI): %16d\n",msp->sp[nc].bdv);
     printf("limit of order number l                       : %16d\n",msp->sp[nc].l_limit);
@@ -147,19 +170,6 @@ void iterative_ops_ms(MSPD *msp)
 }
 
 ///////////////////////////////////////////////////////////////////////
-void *m_alloc2(size_t num,size_t size, char *txt)
-{
-  void *tmp;
-  tmp=calloc(num,size);
-  if(tmp==NULL){
-    printf("memory allocation error!\n");
-    printf("%s. ",txt);
-    printf("Exit..\n");
-    exit(1);
-  }
-  else return tmp;
-}
-
 void check_position(MSPD *msp)
 {
   double r,rs;
@@ -472,8 +482,8 @@ void scattered_EH(double complex *e,double complex *h,double *xb,SPD *sp,Bobj *b
   cos_p=x/rxy;  sin_p=y/rxy;
   ke =2.0*M_PI*bm->n_0/bm->lambda_0;
   ker=ke*r;
-  ne=bm->n_0/Z0;
-  i_ne=Z0/(bm->n_0);
+  ne=bm->n_0;
+  i_ne=1.0/(bm->n_0);
   
   rcth1d(lm,ker,&nn,xi,dxi);
   if(nn<sp->ddt.l_max) sp->ddt.l_max=nn;
@@ -568,8 +578,8 @@ void internal_EH(double complex *e,double complex *h,double *xb,SPD *sp,Bobj *bm
 
   ke =2.0*M_PI*sp->ns/bm->lambda_0;
   ker=ke*r;
-  ne=sp->ns/Z0;
-  i_ne=Z0/(sp->ns);
+  ne=sp->ns;
+  i_ne=1.0/(sp->ns);
 
   rctjc(lm,ker,&nn,psi,dpsi);
   if(nn<sp->ddt.l_max) sp->ddt.l_max=nn;

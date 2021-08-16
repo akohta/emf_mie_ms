@@ -21,7 +21,7 @@ int main()
   
   // x=0 plane 
   if((ff=fopen("force_yz.txt","wt"))==NULL){    printf("Can not open the file.\n");    exit(1);  }
-  fprintf(ff,"%s\n","# y z Fx Fy Fz");
+  fprintf(ff,"%s\n","# y z Fx[N] Fy[N] Fz[N]");
 
   r[0]=0.0;
   for(i=0;i<max;i++){
@@ -33,7 +33,8 @@ int main()
       set_coef(&msp);
       // force 
       force_ms(0,vf,&msp);
-      fprintf(ff,"%g %g %g %g %g\n",r[1],r[2],vf[0],vf[1],vf[2]);
+      // force in MKSA system of units [N]
+      fprintf(ff,"%g %g %g %g %g\n",r[1],r[2],OSUtoMKSA_Force(vf[0]),OSUtoMKSA_Force(vf[1]),OSUtoMKSA_Force(vf[2]));
      }
     fprintf(ff,"\n");
 
@@ -44,7 +45,7 @@ int main()
   
   // y=0 plane 
   if((ff=fopen("force_xz.txt","wt"))==NULL){    printf("Can not open the file.\n");    exit(1);  }
-  fprintf(ff,"%s\n","# x z Fx Fy Fz");
+  fprintf(ff,"%s\n","# x z Fx[N] Fy[N] Fz[N]");
 
   r[1]=0.0;
   for(i=0;i<max;i++){
@@ -54,9 +55,9 @@ int main()
       // set shpere position
       msp.sp[0].xs=r[0];      msp.sp[0].ys=r[1];      msp.sp[0].zs=r[2];
       set_coef(&msp);
-      // force 
+      // force in MKSA system of units [N]
       force_ms(0,vf,&msp);
-      fprintf(ff,"%g %g %g %g %g\n",r[0],r[2],vf[0],vf[1],vf[2]);
+      fprintf(ff,"%g %g %g %g %g\n",r[0],r[2],OSUtoMKSA_Force(vf[0]),OSUtoMKSA_Force(vf[1]),OSUtoMKSA_Force(vf[2]));
      }
     fprintf(ff,"\n");
   }
@@ -66,7 +67,7 @@ int main()
   
   // z=0 plane
   if((ff=fopen("force_xy.txt","wt"))==NULL){    printf("Can not open the file.\n");    exit(1);  }
-  fprintf(ff,"%s\n","# x y Fx Fy Fz");
+  fprintf(ff,"%s\n","# x y Fx[N] Fy[N] Fz[N]");
 
   r[2]=0.0;
   for(i=0;i<max;i++){
@@ -76,9 +77,9 @@ int main()
       // set shpere position
       msp.sp[0].xs=r[0];      msp.sp[0].ys=r[1];      msp.sp[0].zs=r[2];
       set_coef(&msp);
-      // force 
+      // force in MKSA system of units [N]
       force_ms(0,vf,&msp);
-      fprintf(ff,"%15.14g %15.14g %15.14g %15.14g %15.14g\n",r[0],r[1],vf[0],vf[1],vf[2]);
+      fprintf(ff,"%15.14g %15.14g %15.14g %15.14g %15.14g\n",r[0],r[1],OSUtoMKSA_Force(vf[0]),OSUtoMKSA_Force(vf[1]),OSUtoMKSA_Force(vf[2]));
     }
     fprintf(ff,"\n");
   }

@@ -6,8 +6,10 @@
 #include <math.h>
 #include <complex.h>
 #include <string.h>
-#include "const.h"
+#include "mfb_const.h"
 #include "gauleg.h"
+#include "osu_mksa.h"
+#include "my_utils.h"
 
 typedef struct lgb_data{
   double ki;            // wave number 
@@ -40,11 +42,15 @@ typedef struct lgb{
   LGbD data;
 }LGb;
 
-void read_data_lgb(char *rfile,LGb *lgb);
 void print_data_lgb(LGb *lgb);
+void print_data_lgb_mksa(LGb *lgb);
 void setup_LGb(LGb *lgb);  // calculate coefficient and memory allocation
 void free_LGb(LGb *fpw);   // memory free 
 
 void calc_lgb_EH(double complex *e,double complex *h,double *x,LGb *lgb);
+void calc_lgb_EH_dv(double complex *e,double complex *h,double complex *dedv,double complex *dhdv,double *x,double *v,LGb *lgb);
+// directional devirative ( define : df/dv=df/dx v_x + df/dy v_y + df/fz v_z )
+// dedv[0]=dE_x/dv, dedv[1]=dE_y/dv, dedv[2]=dE_z/dv, dhdv[0]=dH_x/dv, dhdv[1]=dH_y/dv, dhdv[2]=dH_z/dv
+
 
 #endif

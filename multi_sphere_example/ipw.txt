@@ -2,4 +2,4 @@
 # number of waves
 1
 #lambda0 ni power real(e0x) imag(e0x) real(e0y) imag(e0y) fx fy fz theta phi
-1.064e-6 1.33 1.0e6 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0
+1.064 1.33 1.0e-3 1.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0

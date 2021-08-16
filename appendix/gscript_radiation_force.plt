@@ -9,23 +9,23 @@ set palette defined ( 0 '#000090',1 '#000fff',2 '#0090ff',3 '#0fffee',4 '#90ff70
 set size square
 set multiplot layout 2,2
 
-set xrange[-1.0e-6 : 1.0e-6]
-set yrange[-1.0e-6 : 1.0e-6]
+set xrange[-1.0 : 1.0]
+set yrange[-1.0 : 1.0]
 
-scale=0.8e-7;
+scale=0.8e-1;
 
-set title "y-z plane (x=0) radiation force"
-set xlabel "{/Arial-Italic y} (m)"
-set ylabel "{/Arial-Italic z} (m)"
+set title "radiation force on x=0 plane"
+set xlabel "{/Arial-Italic y}"
+set ylabel "{/Arial-Italic z}"
 plot "force_yz.txt" u 1:2:(scale*$4/sqrt($4*$4+$5*$5)):(scale*$5/sqrt($4*$4+$5*$5)):(sqrt($4*$4+$5*$5)) w vector lc palette ti ""
 
-set title "x-z plane (y=0) radiation force"
-set xlabel "{/Arial-Italic x} (m)"
-set ylabel "{/Arial-Italic z} (m)"
+set title "radiation force on y=0 plane"
+set xlabel "{/Arial-Italic x}"
+set ylabel "{/Arial-Italic z}"
 plot "force_xz.txt" u 1:2:(scale*$3/sqrt($3*$3+$5*$5)):(scale*$5/sqrt($3*$3+$5*$5)):(sqrt($3*$3+$5*$5)) w vector lc palette ti ""
 
-set title "x-y plane (z=0) radiation force"
-set xlabel "{/Arial-Italic x} (m)"
-set ylabel "{/Arial-Italic y} (m)"
+set title "radiation force on z=0 plane"
+set xlabel "{/Arial-Italic x}"
+set ylabel "{/Arial-Italic y}"
 plot "force_xy.txt" u 1:2:(scale*$3/sqrt($3*$3+$4*$4)):(scale*$4/sqrt($3*$3+$4*$4)):(sqrt($3*$3+$4*$4)) w vector lc palette ti ""
 
