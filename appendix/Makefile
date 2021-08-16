@@ -1,4 +1,3 @@
-# Makefile for intel C compiler  
 CC      =gcc
 CFLAGS  =-O3 -Wall
 LDFLAGS =-lm -lgsl -lgslcblas
@@ -11,15 +10,15 @@ TARGET2 =radiation_force.out
 TRGSRC2 =radiation_force.c
 
 SRCS1=$(wildcard $(SRCDIR1)/*.c)
-OBJS1=$(addprefix $(OBJDIR)/,$(patsubst %.c,%.o,$(notdir $(SRCS1)) ))
+OBJS1=$(addprefix $(OBJDIR)/,$(patsubst %.c,%.o,$(notdir $(SRCS1))))
 HEAD1=$(wildcard $(SRCDIR1)/*.h)
 
 SRCS2=$(wildcard $(SRCDIR2)/*.c)
-OBJS2=$(addprefix $(OBJDIR)/,$(patsubst %.c,%.o,$(notdir $(SRCS2)) ))
+OBJS2=$(addprefix $(OBJDIR)/,$(patsubst %.c,%.o,$(notdir $(SRCS2))))
 HEAD2=$(wildcard $(SRCDIR2)/*.h)
 
 SRCS3=$(wildcard $(SRCDIR3)/*.c)
-OBJS3=$(addprefix $(OBJDIR)/,$(patsubst %.c,%.o,$(notdir $(SRCS3)) ))
+OBJS3=$(addprefix $(OBJDIR)/,$(patsubst %.c,%.o,$(notdir $(SRCS3))))
 HEAD3=$(wildcard $(SRCDIR3)/*.h)
 
 
@@ -48,5 +47,6 @@ $(OBJDIR)/%.o : $(SRCDIR3)/%.c
 clean:
 	@rm -rf $(TARGET2) ./*.o
 	
-$(OBJS1) : $(HEAD1) $(HEAD2)
-$(OBJS2) : $(HEAD2)
+$(OBJS1) : $(HEAD1) $(HEAD2) $(HEAD3)
+$(OBJS2) : $(HEAD2) $(HEAD3)
+$(OBJD3) : $(HEAD3)
