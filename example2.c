@@ -12,7 +12,7 @@ int main(int argc,char *argv[])
   read_dat_ms(argv[1],&msp); // read data file
   print_data_ms(&msp); // print data
   
-  max=150;
+  max=200;
   rang=4.0*msp.bm.lambda_0;
   dr=rang*2/(double)(max-1);
   

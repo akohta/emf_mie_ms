@@ -1,0 +1,80 @@
+../example1.out ex1.dat 
+
+ "fpw.txt" No.00 -- focused plane wave --
+wave length of incident beam in vacuum      :           1.064
+refractive index of surrounding             :            1.33
+numerical aperture                          :             1.2
+incident beam power                         :               1
+x-component of polarization coefficient     :0.70711+      0i
+y-component of polarization coefficient     :      0+0.70711i
+x-component of translation vector           :               0
+y-component of translation vector           :               0
+z-component of translation vector           :               0
+rotation parameter theta               [rad]:               0
+rotation parameter phi                 [rad]:               0
+gauss-legendre integration sampling number  :              64
+
+---- sphere data ( msphr.txt ) ----
+number of spheres                             :                1
+  Sphere ID 0
+radius of sphere                              :              2.5
+refractive index of sphere                    :     1.6+  1e-06i
+x-coordinate of sphere center                 :                0
+y-coordinate of sphere center                 :                0
+z-coordinate of sphere center                 :                0
+basic sampling number on sphere surface       :               32
+division number for sphere surface    (per PI):                4
+limit of order number l                       :               40
+
+ "fpw.txt" No.00 -- focused plane wave, MKSA system --
+wave length of incident beam in vacuum   [m]:       1.064e-06
+refractive index of surrounding             :            1.33
+numerical aperture                          :             1.2
+incident beam power                      [W]:           0.001
+x-component of polarization coefficient     :0.70711+      0i
+y-component of polarization coefficient     :      0+0.70711i
+x-component of translation vector        [m]:               0
+y-component of translation vector        [m]:               0
+z-component of translation vector        [m]:               0
+rotation parameter theta               [rad]:               0
+rotation parameter phi                 [rad]:               0
+gauss-legendre integration sampling number  :              64
+
+---- sphere data ( msphr.txt ), MKSA system ----
+number of spheres                             :                1
+  Sphere ID 0
+radius of sphere                           [m]:          2.5e-06
+refractive index of sphere                    :     1.6+  1e-06i
+x-coordinate of sphere center              [m]:                0
+y-coordinate of sphere center              [m]:                0
+z-coordinate of sphere center              [m]:                0
+basic sampling number on sphere surface       :               32
+division number for sphere surface    (per PI):                4
+limit of order number l                       :               40
+
+Electromagnetic field at r=(  0, 0,-1.5 )
+Ex = -2.81675021135201e-01 -1.37182639691846e-01 I (=-1.72887509840824e+05 -8.42004550993900e+04 I [V/m](MKSA))
+Ey =  1.37109935045592e-01 -2.81822478908659e-01 I (= 8.41558301795305e+04 -1.72978017004566e+05 I [V/m](MKSA))
+Ez = -3.62822437143078e-08 -2.34594728967263e-08 I (=-2.22694463354410e-02 -1.43990398401233e-02 I [V/m](MKSA))
+Hx = -1.16613855297198e-01 +3.81072780173590e-01 I (=-1.89991805571944e+02 +6.20858519555700e+02 I [A/m](MKSA))
+Hy = -3.81288264483577e-01 -1.16516154064213e-01 I (=-6.21209594931971e+02 -1.89832626942491e+02 I [A/m](MKSA))
+Hz = -5.03752427032010e-08 +4.44663206877465e-08 I (=-8.20732947462723e-05 +7.24462503454258e-05 I [A/m](MKSA))
+Real electromagnetic field at t=0.001
+Ex = -2.82480202853486e-01 (=-1.73381717178353e+05 [V/m](MKSA))
+Ey =  1.35443322068201e-01 (= 8.31328904585418e+04 [V/m](MKSA))
+Ez = -3.64201443313815e-08 (=-2.23540874732860e-02 [V/m](MKSA))
+Hx = -1.14361505317579e-01 (=-1.86322189827596e+02 [A/m](MKSA))
+Hy = -3.81969669310402e-01 (=-6.22319766043663e+02 [A/m](MKSA))
+Hz = -5.01117811786317e-08 (=-8.16440530354645e-05 [A/m](MSKA))
+
+Radiation force and torque
+Mie coefficient
+sphere id  0, F=( -5.079172543577e-18, 5.9062584341395e-18, 0.0057461178489403 )
+           0, N=( -2.6715236431773e-22,-3.5354286543408e-21, 7.5305420228867e-06 )
+           0, F=( -1.6942295938536e-29, 1.9701157505902e-29, 1.9166986011837e-14 ) [ N ](MKSA)
+           0, N=( -8.9112436683691e-40,-1.1792920602228e-38, 2.5119184362158e-23 ) [N m](MKSA)
+Surface integral
+sphere id  0, F=(  4.0809369772354e-16,-1.5126393781406e-17, 0.0057461178489419 ) [ N ]
+           0, N=( -3.9342986334068e-17, 1.0161600158326e-16, 7.5305420234082e-06 ) [N m]
+           0, F=(  1.3612540503722e-27,-5.0456218553057e-29, 1.9166986011843e-14 ) [ N ](MKSA)
+           0, N=( -1.3123407638917e-34, 3.3895449625773e-34, 2.5119184363898e-23 ) [N m](MKSA)

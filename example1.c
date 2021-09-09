@@ -3,7 +3,7 @@
 #include "emf_mie_ms.h"
 
 // radiation force and torque are calculated by surface integral of maxwell stress tensor
-void force_torque_integral(int i,double *vf,double *vn,MSPD *msp);
+int force_torque_integral(int i,double *vf,double *vn,MSPD *msp);
 
 int main(int argc,char *argv[]) 
 {
@@ -60,19 +60,20 @@ int main(int argc,char *argv[])
     printf("          %2d, F=( % 15.14g,% 15.14g,% 15.14g ) [ N ](MKSA)\n",i,OSUtoMKSA_Force(vf[0]),OSUtoMKSA_Force(vf[1]),OSUtoMKSA_Force(vf[2]));
     printf("          %2d, N=( % 15.14g,% 15.14g,% 15.14g ) [N m](MKSA)\n",i,OSUtoMKSA_Torque(vn[0]),OSUtoMKSA_Torque(vn[1]),OSUtoMKSA_Torque(vn[2]));
     
-    printf("Surface integral\n");
-    force_torque_integral(i,vf,vn,&msp); // for verification 
-    printf("sphere id %2d, F=( % 15.14g,% 15.14g,% 15.14g ) [ N ]\n",i,vf[0],vf[1],vf[2]);
-    printf("          %2d, N=( % 15.14g,% 15.14g,% 15.14g ) [N m]\n",i,vn[0],vn[1],vn[2]);
-    printf("          %2d, F=( % 15.14g,% 15.14g,% 15.14g ) [ N ](MKSA)\n",i,OSUtoMKSA_Force(vf[0]),OSUtoMKSA_Force(vf[1]),OSUtoMKSA_Force(vf[2]));
-    printf("          %2d, N=( % 15.14g,% 15.14g,% 15.14g ) [N m](MKSA)\n",i,OSUtoMKSA_Torque(vn[0]),OSUtoMKSA_Torque(vn[1]),OSUtoMKSA_Torque(vn[2]));
+    if(force_torque_integral(i,vf,vn,&msp)){ // for verification
+      printf("Surface integral\n");
+      printf("sphere id %2d, F=( % 15.14g,% 15.14g,% 15.14g ) [ N ]\n",i,vf[0],vf[1],vf[2]);
+      printf("          %2d, N=( % 15.14g,% 15.14g,% 15.14g ) [N m]\n",i,vn[0],vn[1],vn[2]);
+      printf("          %2d, F=( % 15.14g,% 15.14g,% 15.14g ) [ N ](MKSA)\n",i,OSUtoMKSA_Force(vf[0]),OSUtoMKSA_Force(vf[1]),OSUtoMKSA_Force(vf[2]));
+      printf("          %2d, N=( % 15.14g,% 15.14g,% 15.14g ) [N m](MKSA)\n",i,OSUtoMKSA_Torque(vn[0]),OSUtoMKSA_Torque(vn[1]),OSUtoMKSA_Torque(vn[2]));
+    }
   }
   
   free_ms(&msp); // free allocated memory
   return 0;
 }
 
-void force_torque_integral(int id,double *vf,double *vn,MSPD *msp)
+int force_torque_integral(int id,double *vf,double *vn,MSPD *msp)
 {
   const int nc=80;
   double xt[nc],wt[nc],xp[2*nc],wp[2*nc];
@@ -85,8 +86,8 @@ void force_torque_integral(int id,double *vf,double *vn,MSPD *msp)
   vn[0]=0.0;  vn[1]=0.0;  vn[2]=0.0;
   
   if(msp->n_sphr!=1){
-    printf("this code can analize single sphere only. Return...\n");
-    return;
+    //printf("this code can analize single sphere only. Return...\n");
+    return 0;
   }
     
   eps=msp->bm.n_0*msp->bm.n_0;
@@ -140,4 +141,6 @@ void force_torque_integral(int id,double *vf,double *vn,MSPD *msp)
     vn[1]+=tny*wp[i];
     vn[2]+=tnz*wp[i];
   }
+  
+  return 1;
 }

@@ -2,4 +2,4 @@
 # number of spheres
 1
 # a real(ns) imag(ns) xs ys zs bsn bdv l_limit
-2.5 1.33 5.0e-6 0.0 0.0 0.0 32 4 40
+2.5 1.600 1.0e-6 0.0 0.0 0.0 32 4 40
