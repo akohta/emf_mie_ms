@@ -26,7 +26,7 @@ GNU Scientific Library is required.
    For example, './example2.out ex.dat'. 
    This executable calculates electromagnetic field intensity distributions, outputs them to text files.
    The I_example2.png is the visualization result of electromagnetic field intensity distributions, created by Gnuplot script gscript_example2.plt
-   (converted eps to png by using ImageMagick).
+   (converted eps to png by using ImageMagick).  
 
 ![intensity distributions](I_example2.png "intensity distributions (I_example2.png)")
 
@@ -35,22 +35,22 @@ The mie_ms_solver is parallelized using OpenMP. The number of threads is control
 The additional analysis example of single sphere is in the folder analysis_sample1.
 
 
-### Analysis sample of multi-spheres 
+## Analysis sample of multi-spheres 
 
 The analysis sample of multi-spheres is in the folder analysis_sample2. 
 The multiple scattering between spheres can be analyzed by the executable mie_ms_solver.
 The usage is the same as example code. 
 For exampe, '../mie_ms_solver ex2.dat', '../example2.out ex2.dat' (run in analysis_sample2 folder). 
-The I_example2.png in this folder is the visualization result of electromagnetic field intensity distributions. 
+The I_example2.png in this folder is the visualization result of electromagnetic field intensity distributions.  
 
 ![intensity distributions 2](analysis_sample2/I_example2.png "intensity distributions (analysis_sample2/I_example2.png)")
 
 
-### Analysis sample of radiation force  
+## Analysis sample of radiation force  
 
 The code in the folder analysis_sample3 is the radiation force analysis program for optical trapping. 
 The usage is 'make' and './radiation_force.out'.
-The radiation_force.png is the visualization result of radiation forces, created by Gnuplot script gscript_radiation_force.plt.
+The radiation_force.png is the visualization result of radiation forces, created by Gnuplot script gscript_radiation_force.plt.  
 
 ![radiation force analysis](analysis_sample3/radiation_force.png "vector plot of radiation force (analysis_sample3/radiation_force.png)")
 
@@ -83,6 +83,3 @@ Please see com_src/osu_mksa.h and com_src/osu_mksa.c for detail of conversions.
 The formula (12) in the Reference 2 ( z-component of radiation torque ) is misprinted. The following formula is correct.  
 <img src="https://latex.codecogs.com/gif.latex?\frac{\left<N_z\right>}{a^3E_0^2}=-\frac{a}{8\pi}\sum_{l=1}^{\infty}\sum_{m=-l}^{l}l(l+1)m\left[\epsilon_{\mathrm{ext}}|a_{lm}|^2+|b_{lm}|^2+\Re(\epsilon_{\mathrm{ext}}a_{lm}A_{lm}^*+b_{lm}B_{lm}^*)\right]">.  
 The first letter <img src="https://latex.codecogs.com/gif.latex?l"> in the term of sum is missed.
-
-
-
