@@ -17,6 +17,8 @@ GNU Scientific Library is required.
    The beam datafile "ipw.txt" (plane wave is defined) and the sphere datafile "msphr.txt" (radius 2.5 water droplet is defined) are used. 
    This executable calcluates Mie coefficients, outputs them to binary file with the specified file name.
    This program searches for a sphere datafile in current directory using the default datafile name "msphr.txt". 
+   As a simple representation of the analysis model, the nodes used for the surface integral are output as point cloud data. 
+   In this case, the file "ex.particles" is output, and the visualization result is "ex_particle.png" ( using Paraview ). 
    
 3. type './example1.out' with a argument of datafile name.   
    For example, './example1.out ex.dat'. 
@@ -28,6 +30,7 @@ GNU Scientific Library is required.
    The I_example2.png is the visualization result of electromagnetic field intensity distributions, created by Gnuplot script gscript_example2.plt
    (converted eps to png by using ImageMagick).  
 
+![point cloud data](ex_particles.png "nodes for surface integral (ex_particles.png)") 
 ![intensity distributions](I_example2.png "intensity distributions (I_example2.png)")
 
 Please see exmie_src/emf_mie_ms.h for detail of functions, mfb_src/multi_fbeam.h for detail of incident fields. 
@@ -43,6 +46,7 @@ The usage is the same as example code.
 For exampe, '../mie_ms_solver ex2.dat', '../example2.out ex2.dat' (run in analysis_sample2 folder). 
 The I_example2.png in this folder is the visualization result of electromagnetic field intensity distributions.  
 
+![point cloud data 2](analysis_sample2/ex2_particles.png "nodes for surface integral (analysis_sample2/ex_particles.png)") 
 ![intensity distributions 2](analysis_sample2/I_example2.png "intensity distributions (analysis_sample2/I_example2.png)")
 
 
