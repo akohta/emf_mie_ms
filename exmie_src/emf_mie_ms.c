@@ -169,6 +169,47 @@ void iterative_ops_ms(MSPD *msp)
   free(bc);  free(f0);
 }
 
+void output_node_particles(char *fname,MSPD *msp)
+{
+  FILE *fp;
+  double a,st,ct,sp,cp,x,y,z;
+  int s1,s2,oid,i,j;
+  char *sd,fo[128]="";
+
+  sd=strrchr(fname,'.');
+  if(sd==NULL){ // no file extension
+    sprintf(fo,"%s.particles",fname);
+  }
+  else {
+    s1=strlen(fname);
+    s2=strlen(sd);
+    strncpy(fo,fname,s1-s2);
+    sprintf(fo,"%s.particles",fo);
+  }
+  
+  if((fp=fopen(fo,"wt"))==NULL){    printf("Can not open the %s file.\n",fo);    exit(1);  }
+  fprintf(fp,"# x y z object_id\n");
+  
+  for(oid=0;oid<msp->n_sphr;oid++){
+    a=msp->sp[oid].a;
+    for(i=0;i<msp->sp[oid].ddt.nt;i++){
+      st=sin(msp->sp[oid].ddt.xt[i]);
+      ct=cos(msp->sp[oid].ddt.xt[i]);
+      for(j=0;j<msp->sp[oid].ddt.np;j++){
+        sp=sin(msp->sp[oid].ddt.xp[j]);
+        cp=cos(msp->sp[oid].ddt.xp[j]);
+
+        x=a*st*cp+msp->sp[oid].xs;
+        y=a*st*sp+msp->sp[oid].ys;
+        z=a*ct   +msp->sp[oid].zs;
+        fprintf(fp,"%15.14e %15.14e %15.14e %d\n",x,y,z,oid);
+      }
+    }
+  }
+  
+  fclose(fp);
+}
+
 ///////////////////////////////////////////////////////////////////////
 void check_position(MSPD *msp)
 {

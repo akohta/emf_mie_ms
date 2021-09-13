@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
   read_data_ms(&msp);
   print_data_ms(&msp);
   setup_ms(&msp);
+  output_node_particles(argv[1],&msp);  
   
   iterative_ops_ms(&msp);
   

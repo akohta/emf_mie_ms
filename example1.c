@@ -15,6 +15,8 @@ int main(int argc,char *argv[])
   read_dat_ms(argv[1],&msp); // read data file
   print_data_ms(&msp);       // print data
   print_data_ms_mksa(&msp);  // print data in MKSA system of units
+
+  output_node_particles(argv[1],&msp); // test
   
   r[0]= 0.0; // set x-coordinate 
   r[1]= 0.0; // set y-coordinate

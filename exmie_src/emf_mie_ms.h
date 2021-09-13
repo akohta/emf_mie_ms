@@ -55,6 +55,7 @@ void print_data_ms_mksa(MSPD *msp);// print loaded data in MKSA system of units
 void setup_ms(MSPD *msp);          // allocate memory and setup coefficients
 void  free_ms(MSPD *msp);          // free allocated memory
 void iterative_ops_ms(MSPD *msp);  // solve multiple scattering
+void output_node_particles(char *fname,MSPD *msp); // outputs the nodes for surface integral as point cloud data ( .particles file )
 
 // ---- emf_mie_ms_field.c ----
 void  incident_EH_ms(double complex *e,double complex *h,double *r,MSPD *msp); // calculate incident field 
