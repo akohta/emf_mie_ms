@@ -48,8 +48,8 @@ The additional analysis example of single sphere is in the folder analysis_sampl
 
 ![point cloud data](ex_particles.png "nodes for surface integral (ex_particles.png)")  
 ![intensity distributions](I_example2.png "intensity distributions (I_example2.png)")  
-![xz_Ex.gif](xz_Ex.gif "instantaneous value of the E_x on y=0 plane (xz_Ex.png)")![yz_Ex.gif](yz_Ex.gif "instantaneous value of the E_x on x=0 plane (yz_Ex.png)")  
-![xy_Ex.gif](xy_Ex.gif "instantaneous value of the E_x on z=0 plane (xy_Ex.png)")  
+![xz_Ex.gif](xz_Ex.gif "instantaneous value of the E_x on y=0 plane (xz_Ex.gif)")![yz_Ex.gif](yz_Ex.gif "instantaneous value of the E_x on x=0 plane (yz_Ex.gif)")  
+![xy_Ex.gif](xy_Ex.gif "instantaneous value of the E_x on z=0 plane (xy_Ex.gif)")  
 
 
 
@@ -63,8 +63,8 @@ The I_example2.png in this folder is the visualization result of electromagnetic
 
 ![point cloud data 2](analysis_sample2/ex2_particles.png "nodes for surface integral (analysis_sample2/ex_particles.png)")  
 ![intensity distributions 2](analysis_sample2/I_example2.png "intensity distributions (analysis_sample2/I_example2.png)")  
-![xz_Ex.gif 2](analysis_sample2/xz_Ex.gif "instantaneous value of the E_x on y=0 plane (analysis_sample2/xz_Ex.png)")![yz_Ex.gif 2](analysis_sample2/yz_Ex.gif "instantaneous value of the E_x on x=0 plane (analysis_sample2/yz_Ex.png)")  
-![xy_Ex.gif 2](analysis_sample2/xy_Ex.gif "instantaneous value of the E_x on z=0 plane (analysis_sample2/xy_Ex.png)")  
+![xz_Ex.gif 2](analysis_sample2/xz_Ex.gif "instantaneous value of the E_x on y=0 plane (analysis_sample2/xz_Ex.gif)")![yz_Ex.gif 2](analysis_sample2/yz_Ex.gif "instantaneous value of the E_x on x=0 plane (analysis_sample2/yz_Ex.gif)")  
+![xy_Ex.gif 2](analysis_sample2/xy_Ex.gif "instantaneous value of the E_x on z=0 plane (analysis_sample2/xy_Ex.gif)")  
 
 
 ## Analysis sample of radiation force  
