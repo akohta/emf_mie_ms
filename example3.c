@@ -71,19 +71,21 @@ int main(int argc,char *argv[])
 void directory_name(char *src,char *nn)
 {
   int s1,s2;
-  char *sd,buf[64]="";
+  char *sd,fo[64]={},buf[54]={};
   
-  sd=strrchr(src,'.');
-  if(sd==NULL){ // no file extension
-    sprintf(nn,"%s_images",src);
+  s1=strlen(src);
+  if(s1>54){
+    printf("example3.c, directory_name(), directory name is too long. exit...\n");
+    exit(1);
   }
-  else {
-    s1=strlen(src);
+  sprintf(fo,"%s",src);
+  sd=strrchr(fo,'.');
+  if(sd!=NULL){
     s2=strlen(sd);
     strncpy(buf,src,s1-s2);
-    sprintf(nn,"%s_images",buf);
+    sprintf(fo,"%s_images",buf);
   }
-  
+  sprintf(nn,"%s",fo);
 }
 
 void make_directory(char *dir_name)

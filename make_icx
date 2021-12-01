@@ -1,8 +1,8 @@
-# Makefile for intel compiler
-CC      =icc
+# Makefile for intel compiler 
+CC      =icx
 CFLAGS  =-fast -Wall
 LDFLAGS =-lgsl -lgslcblas -lpng -lz
-MPFLAGS =-qopenmp
+MPFLAGS =-fiopenmp
 SRCDIR1 =exmie_src
 SRCDIR2 =mfb_src
 SRCDIR3 =com_src
@@ -39,19 +39,19 @@ directories:
 	@mkdir -p $(OBJDIR)
 
 $(TARGET1) : $(TRGOBJ1)  
-	$(CC) $(LDFLAGS) $(MPFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS) $(MPFLAGS)
 
 $(TARGET2) : $(TRGOBJ2)  
-	$(CC) $(LDFLAGS) $(MPFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS) $(MPFLAGS)
 
 $(TARGET3) : $(TRGOBJ3)  
-	$(CC) $(LDFLAGS) $(MPFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS) $(MPFLAGS)
 
-$(TARGET4) : $(TRGOBJ4)  
-	$(CC) $(LDFLAGS) $(MPFLAGS) -o $@ $^
+$(TARGET4) : $(TRGOBJ4)
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS) $(MPFLAGS)
 
 $(OBJDIR)/%.o : $(SRCDIR1)/%.c
-	$(CC) $(CFLAGS) $(MPFLAGS) -I$(SRCDIR2) -I$(SRCDIR3) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(SRCDIR2) -I$(SRCDIR3) -c $< -o $@ $(MPFLAGS)
 
 $(OBJDIR)/%.o : $(SRCDIR2)/%.c
 	$(CC) $(CFLAGS) -I$(SRCDIR3) -c $< -o $@
@@ -60,7 +60,7 @@ $(OBJDIR)/%.o : $(SRCDIR3)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 .c.o :
-	$(CC) $(CFLAGS) $(MPFLAGS) -I$(SRCDIR1) -I$(SRCDIR2) -I$(SRCDIR3) -c $<
+	$(CC) $(CFLAGS) -I$(SRCDIR1) -I$(SRCDIR2) -I$(SRCDIR3) -c $< $(MPFLAGS)
 
 clean:
 	@rm -rf $(TARGET1) $(TARGET2) $(TARGET3) $(TARGET4) $(OBJDIR) ./*.o

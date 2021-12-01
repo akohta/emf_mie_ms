@@ -125,15 +125,20 @@ void free_mfb(Bobj *obj)
   // ipw
   free(obj->bd.ipw);  obj->n_ipw=0; 
   // fpw
-  for(i=0;i<obj->n_fpw;i++)  free_Fpw(&(obj->bd.fpw[i]));     free(obj->bd.fpw);     obj->n_fpw=0; 
+  for(i=0;i<obj->n_fpw;i++)  free_Fpw(&(obj->bd.fpw[i]));
+  free(obj->bd.fpw);     obj->n_fpw=0; 
   // lgb
-  for(i=0;i<obj->n_lgb;i++)  free_LGb(&(obj->bd.lgb[i]));     free(obj->bd.lgb);     obj->n_lgb=0;
+  for(i=0;i<obj->n_lgb;i++)  free_LGb(&(obj->bd.lgb[i]));
+  free(obj->bd.lgb);     obj->n_lgb=0;
   // bsb
-  for(i=0;i<obj->n_bsb;i++)  free_Bsb(&(obj->bd.bsb[i]));     free(obj->bd.bsb);     obj->n_bsb=0;
+  for(i=0;i<obj->n_bsb;i++)  free_Bsb(&(obj->bd.bsb[i]));
+  free(obj->bd.bsb);     obj->n_bsb=0;
   // blg
-  for(i=0;i<obj->n_blg;i++)  free_BsLGb(&(obj->bd.blg[i]));   free(obj->bd.blg);     obj->n_blg=0;
+  for(i=0;i<obj->n_blg;i++)  free_BsLGb(&(obj->bd.blg[i]));
+  free(obj->bd.blg);     obj->n_blg=0;
   // rab
-  for(i=0;i<obj->n_rab;i++)  free_rab(&(obj->bd.rab[i]));     free(obj->bd.rab);     obj->n_rab=0;
+  for(i=0;i<obj->n_rab;i++)  free_rab(&(obj->bd.rab[i]));
+  free(obj->bd.rab);     obj->n_rab=0;
 
 }
 
@@ -145,28 +150,88 @@ int read_data_mfb_ipw(char *fname,Bobj *obj)
     return 0;
   }  
   char buf[256]="";    int i,nn;  double tmpd,tmpd2;
-  fgets(buf,256,fp);  fgets(buf,256,fp);
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_ipw(), failed to read the line. exit...\n");
+    exit(1);
+  }
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_ipw(), failed to read the line. exit...\n");
+    exit(1);
+  }
   
   sprintf(obj->fname_ipw,"%s",fname); 
-  fscanf(fp,"%d\n",&nn);  fgets(buf,256,fp);
+  if(fscanf(fp,"%d\n",&nn)!=1){
+    printf("multi_fbeam.c, read_data_mfb_ipw(), failed to read the nn. exit...\n");
+    exit(1);
+  }
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_ipw(), failed to read the line. exit...\n");
+    exit(1);
+  }
   if(nn==0) return 0;
   
   free(obj->bd.ipw);
   obj->n_ipw=nn;     obj->bd.ipw=(Ipw *)m_alloc2(nn,sizeof(Ipw),"multi_fbeam.c,read_data_mfb_ipw(),obj->bd.ipw");
 
   for(i=0;i<nn;i++){
-    fscanf(fp,"%lf",&tmpd);  obj->bd.ipw[i].lambda0=tmpd;      
-    fscanf(fp,"%lf",&tmpd);  obj->bd.ipw[i].ni     =tmpd;   
-    fscanf(fp,"%lf",&tmpd);  obj->bd.ipw[i].power  =tmpd;  
-    fscanf(fp,"%lf",&tmpd); 
-    fscanf(fp,"%lf",&tmpd2); obj->bd.ipw[i].e0x    =tmpd+I*tmpd2; 
-    fscanf(fp,"%lf",&tmpd);
-    fscanf(fp,"%lf",&tmpd2); obj->bd.ipw[i].e0y    =tmpd+I*tmpd2; 
-    fscanf(fp,"%lf",&tmpd);  obj->bd.ipw[i].fx     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.ipw[i].fy     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.ipw[i].fz     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.ipw[i].theta  =tmpd;         
-    fscanf(fp,"%lf\n",&tmpd);  obj->bd.ipw[i].phi    =tmpd;       
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_ipw(), failed to read the lambda0. exit...\n");
+      exit(1);
+    }
+    obj->bd.ipw[i].lambda0=tmpd;      
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_ipw(), failed to read the ni. exit...\n");  
+      exit(1);
+    }
+    obj->bd.ipw[i].ni     =tmpd;   
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_ipw(), failed to read the power. exit...\n");
+      exit(1);
+    }
+    obj->bd.ipw[i].power  =tmpd;  
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_ipw(), failed to read the real(e0x). exit...\n");
+      exit(1);
+    } 
+    if(fscanf(fp,"%lf",&tmpd2)!=1){
+      printf("multi_fbeam.c, read_data_mfb_ipw(), failed to read the imag(e0x). exit...\n");
+      exit(1);
+    }
+    obj->bd.ipw[i].e0x    =tmpd+I*tmpd2; 
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_ipw(), failed to read the read(e0y). exit...\n");
+      exit(1);
+    }
+    if(fscanf(fp,"%lf",&tmpd2)!=1){
+      printf("multi_fbeam.c, read_data_mfb_ipw(), failed to read the imag(e0y). exit...\n");
+      exit(1); 
+    }
+    obj->bd.ipw[i].e0y    =tmpd+I*tmpd2; 
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_ipw(), failed to read the fx. exit...\n");
+      exit(1);
+    }
+    obj->bd.ipw[i].fx     =tmpd;
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_ipw(), failed to read the fy. exit...\n");
+      exit(1);
+    }
+    obj->bd.ipw[i].fy     =tmpd;
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_ipw(), failed to read the fz. exit...\n");
+      exit(1);
+    }
+    obj->bd.ipw[i].fz     =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_ipw(), failed to read the theta. exit...\n");
+      exit(1);
+    }
+    obj->bd.ipw[i].theta  =tmpd;
+    if(fscanf(fp,"%lf\n",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_ipw(), failed to read the phi. exit...\n");
+      exit(1);
+    }
+    obj->bd.ipw[i].phi    =tmpd;       
   }
   fclose(fp);
   return nn;
@@ -180,30 +245,98 @@ int read_data_mfb_fpw(char *fname,Bobj *obj)
   return 0; 
   }
   char buf[256]="";  int i,tmpi,nn;  double tmpd,tmpd2;
-  fgets(buf,256,fp);  fgets(buf,256,fp);
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_fpw(), failed to read the line. exit...\n");
+    exit(1);
+  }
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_fpw(), failed to read the line. exit...\n");
+    exit(1);
+  }
   
   sprintf(obj->fname_fpw,"%s",fname);
-  fscanf(fp,"%d\n",&nn);  fgets(buf,256,fp);
+  if(fscanf(fp,"%d\n",&nn)!=1){
+    printf("multi_fbeam.c, read_data_mfb_fpw(), failed to read the nn. exit...\n");
+    exit(1); 
+  }
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_fpw(), failed to read the line. exit...\n");
+    exit(1);
+  }
   if(nn==0) return 0;
   
   free(obj->bd.fpw);
   obj->n_fpw=nn;     obj->bd.fpw=(Fpw *)m_alloc2(nn,sizeof(Fpw),"multi_fbeam.c,read_data_mfb_fpw(),obj->bd.fpw");
 
   for(i=0;i<nn;i++){
-    fscanf(fp,"%lf",&tmpd);  obj->bd.fpw[i].lambda0=tmpd;   
-    fscanf(fp,"%lf",&tmpd);  obj->bd.fpw[i].ni     =tmpd;   
-    fscanf(fp,"%lf",&tmpd);  obj->bd.fpw[i].NA     =tmpd;   
-    fscanf(fp,"%lf",&tmpd);  obj->bd.fpw[i].power  =tmpd;   
-    fscanf(fp,"%lf",&tmpd); 
-    fscanf(fp,"%lf",&tmpd2); obj->bd.fpw[i].e0x    =tmpd+I*tmpd2; 
-    fscanf(fp,"%lf",&tmpd);
-    fscanf(fp,"%lf",&tmpd2); obj->bd.fpw[i].e0y    =tmpd+I*tmpd2; 
-    fscanf(fp,"%lf",&tmpd);  obj->bd.fpw[i].fx     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.fpw[i].fy     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.fpw[i].fz     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.fpw[i].theta  =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.fpw[i].phi    =tmpd;         
-    fscanf(fp,"%d\n",&tmpi); obj->bd.fpw[i].nn     =tmpi;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fpw(), failed to read the lambda0. exit...\n");
+      exit(1);
+    }
+    obj->bd.fpw[i].lambda0=tmpd;   
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fpw(), failed to read the ni. exit...\n");
+      exit(1);
+    }
+    obj->bd.fpw[i].ni     =tmpd;   
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fpw(), failed to read the NA. exit...\n");
+      exit(1);
+    }
+    obj->bd.fpw[i].NA     =tmpd;   
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fpw(), failed to read the power. exit...\n");
+      exit(1);
+    }
+    obj->bd.fpw[i].power  =tmpd;   
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fpw(), failed to read the real(e0x). exit...\n");
+      exit(1);
+    }
+    if(fscanf(fp,"%lf",&tmpd2)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fpw(), failed to read the imag(e0x). exit...\n");
+      exit(1);
+    }
+    obj->bd.fpw[i].e0x    =tmpd+I*tmpd2; 
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fpw(), failed to read the real(e0y). exit...\n");
+      exit(1);
+    }
+    if(fscanf(fp,"%lf",&tmpd2)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fpw(), failed to read the imag(e0y). exit...\n");
+      exit(1);
+    }
+    obj->bd.fpw[i].e0y    =tmpd+I*tmpd2; 
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fpw(), failed to read the fx. exit...\n");
+      exit(1);
+    }
+    obj->bd.fpw[i].fx     =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fpw(), failed to read the fy. exit...\n");
+      exit(1);
+    }
+    obj->bd.fpw[i].fy     =tmpd;
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fpw(), failed to read the fz. exit...\n");
+      exit(1);
+    }
+    obj->bd.fpw[i].fz     =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fpw(), failed to read the theta. exit...\n");
+      exit(1);
+    }
+    obj->bd.fpw[i].theta  =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fpw(), failed to read the phi. exit...\n");
+      exit(1);
+    }
+    obj->bd.fpw[i].phi    =tmpd;         
+    if(fscanf(fp,"%d\n",&tmpi)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fpw(), failed to read the nn. exit...\n");
+      exit(1);
+    }
+    obj->bd.fpw[i].nn     =tmpi;         
   }
   fclose(fp);
   return nn;
@@ -217,31 +350,103 @@ int read_data_mfb_lgb(char *fname,Bobj *obj)
     return 0;
   }
   char buf[256]="";  int i,nn,tmpi;  double tmpd,tmpd2;
-  fgets(buf,256,fp);  fgets(buf,256,fp);
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_lgb(), failed to read the line. exit...\n");
+    exit(1);
+  }
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_lgb(), failed to read the line. exit...\n");
+    exit(1);
+  }
   
   sprintf(obj->fname_lgb,"%s",fname);
-  fscanf(fp,"%d\n",&nn);  fgets(buf,256,fp);
+  if(fscanf(fp,"%d\n",&nn)!=1){
+    printf("multi_fbeam.c, read_data_mfb_lgb(), failed to read the bn. exit...\n");
+    exit(1);
+  }
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_lgb(), failed to read the line. exit...\n");
+    exit(1);
+  }
   if(nn==0) return 0;
   
   free(obj->bd.lgb);
   obj->n_lgb=nn;     obj->bd.lgb=(LGb *)m_alloc2(nn,sizeof(LGb),"multi_fbeam.c,read_data_mfb_lgb(),obj->bd.lgb");
 
   for(i=0;i<nn;i++){
-    fscanf(fp,"%lf",&tmpd);   obj->bd.lgb[i].lambda0=tmpd;      
-    fscanf(fp,"%lf",&tmpd);   obj->bd.lgb[i].ni     =tmpd;       
-    fscanf(fp,"%lf",&tmpd);   obj->bd.lgb[i].NA     =tmpd;      
-    fscanf(fp,"%lf",&tmpd);   obj->bd.lgb[i].power  =tmpd;      
-    fscanf(fp,"%lf",&tmpd); 
-    fscanf(fp,"%lf",&tmpd2);  obj->bd.lgb[i].e0x    =tmpd+I*tmpd2; 
-    fscanf(fp,"%lf",&tmpd);
-    fscanf(fp,"%lf",&tmpd2);  obj->bd.lgb[i].e0y    =tmpd+I*tmpd2; 
-    fscanf(fp,"%lf",&tmpd);   obj->bd.lgb[i].fx     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);   obj->bd.lgb[i].fy     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);   obj->bd.lgb[i].fz     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);   obj->bd.lgb[i].theta  =tmpd;         
-    fscanf(fp,"%lf",&tmpd);   obj->bd.lgb[i].phi    =tmpd;         
-    fscanf(fp,"%d" ,&tmpi);   obj->bd.lgb[i].lg_m   =tmpi;         
-    fscanf(fp,"%d\n" ,&tmpi); obj->bd.lgb[i].nn     =tmpi;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_lgb(), failed to read the lambda0. exit...\n");
+      exit(1);
+    }
+    obj->bd.lgb[i].lambda0=tmpd;      
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_lgb(), failed to read the ni. exit...\n");
+      exit(1);
+    }
+    obj->bd.lgb[i].ni     =tmpd;       
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_lgb(), failed to read the NA. exit...\n");
+      exit(1);
+    }
+    obj->bd.lgb[i].NA     =tmpd;      
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_lgb(), failed to read the power. exit...\n");
+      exit(1);
+    }
+    obj->bd.lgb[i].power  =tmpd;      
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_lgb(), failed to read the real(e0x). exit...\n");
+      exit(1);
+    } 
+    if(fscanf(fp,"%lf",&tmpd2)!=1){
+      printf("multi_fbeam.c, read_data_mfb_lgb(), failed to read the imag(e0x). exit...\n");
+      exit(1);
+    }
+    obj->bd.lgb[i].e0x    =tmpd+I*tmpd2; 
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_lgb(), failed to read the real(e0y). exit...\n");
+      exit(1);
+    }
+    if(fscanf(fp,"%lf",&tmpd2)!=1){
+      printf("multi_fbeam.c, read_data_mfb_lgb(), failed to read the imag(e0y). exit...\n");
+      exit(1);
+    }
+    obj->bd.lgb[i].e0y    =tmpd+I*tmpd2; 
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_lgb(), failed to read the fx. exit...\n");
+      exit(1);
+    }
+    obj->bd.lgb[i].fx     =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_lgb(), failed to read the fy. exit...\n");
+      exit(1);
+    }
+    obj->bd.lgb[i].fy     =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_lgb(), failed to read the fz. exit...\n");
+      exit(1);
+    }
+    obj->bd.lgb[i].fz     =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_lgb(), failed to read the theta. exit...\n");
+      exit(1);
+    }
+    obj->bd.lgb[i].theta  =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_lgb(), failed to read the phi. exit...\n");
+      exit(1);
+    }
+    obj->bd.lgb[i].phi    =tmpd;         
+    if(fscanf(fp,"%d" ,&tmpi)!=1){
+      printf("multi_fbeam.c, read_data_mfb_lgb(), failed to read the lg_m. exit...\n");
+      exit(1);
+    }
+    obj->bd.lgb[i].lg_m   =tmpi;         
+    if(fscanf(fp,"%d\n" ,&tmpi)!=1){
+      printf("multi_fbeam.c, read_data_mfb_lgb(), failed to read the nn. exit...\n");
+      exit(1);
+    }
+    obj->bd.lgb[i].nn     =tmpi;         
   }
   fclose(fp);
   return nn;
@@ -255,28 +460,92 @@ int read_data_mfb_bsb(char *fname,Bobj *obj)
     return 0;
   }
   char buf[256]="";  int i,nn;  double tmpd,tmpd2;
-  fgets(buf,256,fp);  fgets(buf,256,fp);
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_bsb(), failed to read the line. exit...\n");
+    exit(1);
+  }
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_bsb(), failed to read the line. exit...\n");
+    exit(1);
+  }
   sprintf(obj->fname_bsb,"%s",fname);
-  fscanf(fp,"%d\n",&nn);  fgets(buf,256,fp);
+  if(fscanf(fp,"%d\n",&nn)!=1){
+    printf("multi_fbeam.c, read_data_mfb_bsb(), failed to read the bn. exit...\n");
+    exit(1);
+  }
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_bsb(), failed to read the line. exit...\n");
+    exit(1);
+  }
   if(nn==0) return 0;
   
   free(obj->bd.bsb);
   obj->n_bsb=nn;     obj->bd.bsb=(Bsb *)m_alloc2(nn,sizeof(Bsb),"multi_fbeam.c,read_data_mfb_bsb(),obj->bd.bsb");
  
   for(i=0;i<nn;i++){
-    fscanf(fp,"%lf",&tmpd);  obj->bd.bsb[i].lambda0=tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.bsb[i].ni     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.bsb[i].d_angle=tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.bsb[i].power  =tmpd;         
-    fscanf(fp,"%lf",&tmpd);
-    fscanf(fp,"%lf",&tmpd2); obj->bd.bsb[i].e0x    =tmpd+I*tmpd2; 
-    fscanf(fp,"%lf",&tmpd);
-    fscanf(fp,"%lf",&tmpd2); obj->bd.bsb[i].e0y    =tmpd+I*tmpd2; 
-    fscanf(fp,"%lf",&tmpd);  obj->bd.bsb[i].fx     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.bsb[i].fy     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.bsb[i].fz     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.bsb[i].theta  =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.bsb[i].phi    =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_bsb(), failed to read the lambda0. exit...\n");
+      exit(1);
+    }
+    obj->bd.bsb[i].lambda0=tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_bsb(), failed to read the ni. exit...\n");
+      exit(1);
+    }
+    obj->bd.bsb[i].ni     =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_bsb(), failed to read the d_angle. exit...\n");
+      exit(1);
+    }
+    obj->bd.bsb[i].d_angle=tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_bsb(), failed to read the power. exit...\n");
+      exit(1);
+    }
+    obj->bd.bsb[i].power  =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_bsb(), failed to read the real(e0x). exit...\n");
+      exit(1);
+    }
+    if(fscanf(fp,"%lf",&tmpd2)!=1){
+      printf("multi_fbeam.c, read_data_mfb_bsb(), failed to read the imag(e0x). exit...\n");
+      exit(1);
+    }
+    obj->bd.bsb[i].e0x    =tmpd+I*tmpd2; 
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_bsb(), failed to read the real(e0y). exit...\n");
+      exit(1);
+    }
+    if(fscanf(fp,"%lf",&tmpd2)!=1){
+      printf("multi_fbeam.c, read_data_mfb_bsb(), failed to read the imag(e0y). exit...\n");
+      exit(1);
+    }
+    obj->bd.bsb[i].e0y    =tmpd+I*tmpd2; 
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_bsb(), failed to read the fx. exit...\n");
+      exit(1);
+    }
+    obj->bd.bsb[i].fx     =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_bsb(), failed to read the fy. exit...\n");
+      exit(1);
+    }
+    obj->bd.bsb[i].fy     =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_bsb(), failed to read the fz. exit...\n");
+      exit(1);
+    }
+    obj->bd.bsb[i].fz     =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_bsb(), failed to read the theta. exit...\n");
+      exit(1);
+    }
+    obj->bd.bsb[i].theta  =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_bsb(), failed to read the phi. exit...\n");
+      exit(1);
+    }
+    obj->bd.bsb[i].phi    =tmpd;         
   }
   fclose(fp);
   return nn;
@@ -290,29 +559,98 @@ int read_data_mfb_blg(char *fname,Bobj *obj)
     return 0;
   }
   char buf[256]="";  int i,nn,tmpi;  double tmpd,tmpd2;
-  fgets(buf,256,fp);  fgets(buf,256,fp);
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_blg(), failed to read the line. exit...\n");
+    exit(1);
+  }
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_blg(), failed to read the line. exit...\n");
+    exit(1);
+  }
+  
   sprintf(obj->fname_blg,"%s",fname);
-  fscanf(fp,"%d\n",&nn);   fgets(buf,256,fp);
+  if(fscanf(fp,"%d\n",&nn)!=1){
+    printf("multi_fbeam.c, read_data_mfb_blg(), failed to read the bn. exit...\n");
+    exit(1);
+  }
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_blg(), failed to read the line. exit...\n");
+    exit(1);
+  }
   if(nn==0) return 0;
   
   free(obj->bd.blg);
   obj->n_blg=nn;  obj->bd.blg=(BsLGb *)m_alloc2(nn,sizeof(BsLGb),"multi_fbeam.c,read_data_mfb_blg(),obj->bd.blg");
 
   for(i=0;i<nn;i++){
-    fscanf(fp,"%lf",&tmpd);  obj->bd.blg[i].lambda0=tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.blg[i].ni     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.blg[i].d_angle=tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.blg[i].power  =tmpd;         
-    fscanf(fp,"%lf",&tmpd);
-    fscanf(fp,"%lf",&tmpd2); obj->bd.blg[i].e0x    =tmpd+I*tmpd2; 
-    fscanf(fp,"%lf",&tmpd);
-    fscanf(fp,"%lf",&tmpd2); obj->bd.blg[i].e0y    =tmpd+I*tmpd2; 
-    fscanf(fp,"%lf",&tmpd);  obj->bd.blg[i].fx     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.blg[i].fy     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.blg[i].fz     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.blg[i].theta  =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.blg[i].phi    =tmpd;         
-    fscanf(fp,"%d" ,&tmpi);  obj->bd.blg[i].lg_m   =tmpi;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_blg(), failed to read the lambda0. exit...\n");
+      exit(1);
+    }
+    obj->bd.blg[i].lambda0=tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_blg(), failed to read the ni. exit...\n");
+      exit(1);
+    }
+    obj->bd.blg[i].ni     =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_blg(), failed to read the d_angle. exit...\n");
+      exit(1);
+    }
+    obj->bd.blg[i].d_angle=tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_blg(), failed to read the power. exit...\n");
+      exit(1);
+    }
+    obj->bd.blg[i].power  =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_blg(), failed to read the real(e0x). exit...\n");
+      exit(1);
+    }
+    if(fscanf(fp,"%lf",&tmpd2)!=1){
+      printf("multi_fbeam.c, read_data_mfb_blg(), failed to read the imag(e0x). exit...\n");
+      exit(1);
+    }
+    obj->bd.blg[i].e0x    =tmpd+I*tmpd2; 
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_blg(), failed to read the real(e0y). exit...\n");
+      exit(1);
+    }
+    if(fscanf(fp,"%lf",&tmpd2)!=1){
+      printf("multi_fbeam.c, read_data_mfb_blg(), failed to read the imag(e0y). exit...\n");
+      exit(1);
+    }
+    obj->bd.blg[i].e0y    =tmpd+I*tmpd2; 
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_blg(), failed to read the fx. exit...\n");
+      exit(1);
+    }
+    obj->bd.blg[i].fx     =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_blg(), failed to read the fy. exit...\n");
+      exit(1);
+    }
+    obj->bd.blg[i].fy     =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_blg(), failed to read the fz. exit...\n");
+      exit(1);
+    }
+    obj->bd.blg[i].fz     =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_blg(), failed to read the theta. exit...\n");
+      exit(1);
+    }
+    obj->bd.blg[i].theta  =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_blg(), failed to read the phi. exit...\n");
+      exit(1);
+    }
+    obj->bd.blg[i].phi    =tmpd;         
+    if(fscanf(fp,"%d" ,&tmpi)!=1){
+      printf("multi_fbeam.c, read_data_mfb_blg(), failed to read the lg_m. exit...\n");
+      exit(1);
+    }
+    obj->bd.blg[i].lg_m   =tmpi;         
   }
   fclose(fp);
   return nn;
@@ -326,29 +664,98 @@ int read_data_mfb_rab(char *fname,Bobj *obj)
     return 0;
   }
   char buf[256]="";  int i,nn,tmpi;  double tmpd,tmpd2;
-  fgets(buf,256,fp);  fgets(buf,256,fp);
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_rab(), failed to read the line. exit...\n");
+    exit(1);
+  }
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_rab(), failed to read the line. exit...\n");
+    exit(1);
+  }
+  
   sprintf(obj->fname_rab,"%s",fname);
-  fscanf(fp,"%d\n",&nn);   fgets(buf,256,fp);
+  if(fscanf(fp,"%d\n",&nn)!=1){
+    printf("multi_fbeam.c, read_data_mfb_rab(), failed to read the bn. exit...\n");
+    exit(1);
+  }
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_rab(), failed to read the line. exit...\n");
+    exit(1);
+  }
   if(nn==0) return 0;
   
   free(obj->bd.rab);
   obj->n_rab=nn;  obj->bd.rab=(RAb *)m_alloc2(nn,sizeof(RAb),"multi_fbeam.c,read_data_mfb_rab(),obj->bd.rab");
 
   for(i=0;i<nn;i++){
-    fscanf(fp,"%lf",&tmpd);  obj->bd.rab[i].lambda0=tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.rab[i].ni     =tmpd;          
-    fscanf(fp,"%lf",&tmpd);  obj->bd.rab[i].NA     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.rab[i].power  =tmpd;         
-    fscanf(fp,"%lf",&tmpd); 
-    fscanf(fp,"%lf",&tmpd2); obj->bd.rab[i].e0r    =tmpd+I*tmpd2; 
-    fscanf(fp,"%lf",&tmpd);
-    fscanf(fp,"%lf",&tmpd2); obj->bd.rab[i].e0a    =tmpd+I*tmpd2; 
-    fscanf(fp,"%lf",&tmpd);  obj->bd.rab[i].fx     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.rab[i].fy     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.rab[i].fz     =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.rab[i].theta  =tmpd;         
-    fscanf(fp,"%lf",&tmpd);  obj->bd.rab[i].phi    =tmpd;         
-    fscanf(fp,"%d\n",&tmpi); obj->bd.rab[i].nn     =tmpi;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_rab(), failed to read the labmda0. exit...\n");
+      exit(1);
+    }
+    obj->bd.rab[i].lambda0=tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_rab(), failed to read the ni. exit...\n");
+      exit(1);
+    }
+    obj->bd.rab[i].ni     =tmpd;          
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_rab(), failed to read the NA. exit...\n");
+      exit(1);
+    }
+    obj->bd.rab[i].NA     =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_rab(), failed to read the power. exit...\n");
+      exit(1);
+    }
+    obj->bd.rab[i].power  =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_rab(), failed to read the real(e0r). exit...\n");
+      exit(1);
+    } 
+    if(fscanf(fp,"%lf",&tmpd2)!=1){
+      printf("multi_fbeam.c, read_data_mfb_rab(), failed to read the imag(e0r). exit...\n");
+      exit(1);
+    }
+    obj->bd.rab[i].e0r    =tmpd+I*tmpd2; 
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_rab(), failed to read the real(e0a). exit...\n");
+      exit(1);
+    }
+    if(fscanf(fp,"%lf",&tmpd2)!=1){
+      printf("multi_fbeam.c, read_data_mfb_rab(), failed to read the imag(e0a). exit...\n");
+      exit(1);
+    }
+    obj->bd.rab[i].e0a    =tmpd+I*tmpd2; 
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_rab(), failed to read the fx. exit...\n");
+      exit(1);
+    }
+    obj->bd.rab[i].fx     =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_rab(), failed to read the fy. exit...\n");
+      exit(1);
+    }
+    obj->bd.rab[i].fy     =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_rab(), failed to read the fz. exit...\n");
+      exit(1);
+    }
+    obj->bd.rab[i].fz     =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_rab(), failed to read the theta. exit...\n");
+      exit(1);
+    }
+    obj->bd.rab[i].theta  =tmpd;         
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_rab(), failed to read the phi. exit...\n");
+      exit(1);
+    }
+    obj->bd.rab[i].phi    =tmpd;         
+    if(fscanf(fp,"%d\n",&tmpi)!=1){
+      printf("multi_fbeam.c, read_data_mfb_rab(), failed to read the nn. exit...\n");
+      exit(1);
+    }
+    obj->bd.rab[i].nn     =tmpi;         
   }
   fclose(fp);
   return nn;

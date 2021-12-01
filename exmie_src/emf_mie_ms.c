@@ -5,26 +5,75 @@ void  read_data_ms(MSPD *msp)
   FILE *fp;
   if((fp=fopen(fn_sphr,"rt"))==NULL){    printf("Can not open the '%s' file. Exit...\n",fn_sphr);    exit(1);  }
   char buf[256]="";  int tmpi;  double tmpd,tmpd2;
-  fgets(buf,256,fp);  fgets(buf,256,fp);
+  if(fgets(buf,256,fp)==NULL){
+    printf("emf_mie_ms.c, read_data_ms(), failed to read the line. exit...\n");
+    exit(1);
+  }  
+  if(fgets(buf,256,fp)==NULL){
+    printf("emf_mie_ms.c, read_data_ms(), failed to read the line. exit...\n");
+    exit(1);
+  }
 
   int num,nc;
-  fscanf(fp,"%d\n",&tmpi);   num=tmpi;
-  fgets(buf,256,fp);
+  if(fscanf(fp,"%d\n",&tmpi)!=1){
+    printf("emf_mie_ms.c, read_data_ms(), failed to read the num. exit...\n");
+    exit(1);
+  }
+  num=tmpi;
+  if(fgets(buf,256,fp)==NULL){
+    printf("emf_mie_ms.c, read_data_ms(), failed to read the line. exit...\n");
+    exit(1);
+  }
   if(num==0){    printf("No sphere defined. Exit...\n"); exit(1);  }
   
   msp->n_sphr=num;
   msp->sp=(SPD *)m_alloc2(num,sizeof(SPD),"read_data_ms(),msp->sp");
   
   for(nc=0;nc<num;nc++){
-    fscanf(fp,"%lf",&tmpd);  msp->sp[nc].a      =tmpd;
-    fscanf(fp,"%lf",&tmpd); 
-    fscanf(fp,"%lf",&tmpd2); msp->sp[nc].ns     =tmpd+I*tmpd2; 
-    fscanf(fp,"%lf",&tmpd);  msp->sp[nc].xs     =tmpd;
-    fscanf(fp,"%lf",&tmpd);  msp->sp[nc].ys     =tmpd;
-    fscanf(fp,"%lf",&tmpd);  msp->sp[nc].zs     =tmpd; 
-    fscanf(fp,"%d",&tmpi);   msp->sp[nc].bsn    =tmpi; 
-    fscanf(fp,"%d",&tmpi);   msp->sp[nc].bdv    =tmpi; 
-    fscanf(fp,"%d",&tmpi);   msp->sp[nc].l_limit=tmpi; 
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("emf_mie_ms.c, read_data_ms(), failed to read the a. exit...\n");
+      exit(1);
+    }
+    msp->sp[nc].a      =tmpd;
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("emf_mie_ms.c, read_data_ms(), failed to read the real(ns). exit...\n");
+      exit(1);
+    }
+    if(fscanf(fp,"%lf",&tmpd2)!=1){
+      printf("emf_mie_ms.c, read_data_ms(), failed to read the imag(ns). exit...\n");
+      exit(1);
+    }
+    msp->sp[nc].ns     =tmpd+I*tmpd2; 
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("emf_mie_ms.c, read_data_ms(), failed to read the xs. exit...\n");
+      exit(1);
+    }
+    msp->sp[nc].xs     =tmpd;
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("emf_mie_ms.c, read_data_ms(), failed to read the ys. exit...\n");
+      exit(1);
+    }
+    msp->sp[nc].ys     =tmpd;
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("emf_mie_ms.c, read_data_ms(), failed to read the zs. exit...\n");
+      exit(1);
+    }
+    msp->sp[nc].zs     =tmpd; 
+    if(fscanf(fp,"%d",&tmpi)!=1){
+      printf("emf_mie_ms.c, read_data_ms(), failed to read the bsn. exit...\n");
+      exit(1);
+    }
+    msp->sp[nc].bsn    =tmpi; 
+    if(fscanf(fp,"%d",&tmpi)!=1){
+      printf("emf_mie_ms.c, read_data_ms(), failed to read the bdv. exit...\n");
+      exit(1);
+    }
+    msp->sp[nc].bdv    =tmpi; 
+    if(fscanf(fp,"%d",&tmpi)!=1){
+      printf("emf_mie_ms.c, read_data_ms(), failed to read the l_limit. exit...\n");
+      exit(1);
+    }
+    msp->sp[nc].l_limit=tmpi; 
   }
   fclose(fp);
   
@@ -173,18 +222,19 @@ void output_node_particles(char *fname,MSPD *msp)
 {
   FILE *fp;
   double a,st,ct,sp,cp,x,y,z;
-  int s1,s2,oid,i,j;
-  char *sd,fo[128]="";
+  int s1,oid,i,j;
+  char *sd,fo[256]={},tf[200]={};
 
-  sd=strrchr(fname,'.');
-  if(sd==NULL){ // no file extension
-    sprintf(fo,"%s.particles",fname);
+  s1=strlen(fname);
+  if(s1>200){
+    printf("emf_mie_ms.c, output_node_particles(), file name is too long. exit...\n");
+    exit(1);
   }
-  else {
-    s1=strlen(fname);
-    s2=strlen(sd);
-    strncpy(fo,fname,s1-s2);
-    sprintf(fo,"%s.particles",fo);
+  sprintf(fo,"%s",fname);
+  sd=strrchr(fo,'.');
+  if(sd!=NULL){
+    strncpy(tf,fname,s1-strlen(sd));
+    sprintf(fo,"%s.particles",tf);
   }
   
   if((fp=fopen(fo,"wt"))==NULL){    printf("Can not open the %s file.\n",fo);    exit(1);  }
