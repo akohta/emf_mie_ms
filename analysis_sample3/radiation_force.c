@@ -84,7 +84,7 @@ int main()
     fprintf(ff,"\n");
   }
   fclose(ff);
-  printf("analysis of radiation force and potential are finished\n");
+  printf("analysis of radiation force is finished\n");
   
   free_ms(&msp);
   return 0;

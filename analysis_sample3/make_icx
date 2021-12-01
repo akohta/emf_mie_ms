@@ -1,7 +1,7 @@
-CC      =gcc
-CFLAGS  =-O3 -Wall
-LDFLAGS =-lm -lgsl -lgslcblas
-MPFLAGS =-fopenmp
+CC      =icx
+CFLAGS  =-fast -Wall
+LDFLAGS =-lgsl -lgslcblas
+MPFLAGS =-fiopenmp
 SRCDIR1 =../exmie_src
 SRCDIR2 =../mfb_src
 SRCDIR3 =../com_src
