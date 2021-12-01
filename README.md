@@ -45,6 +45,8 @@ GNU Scientific Library and libpng are required.
 Please see exmie_src/emf_mie_ms.h for detail of functions, mfb_src/multi_fbeam.h for detail of incident fields. 
 The mie_ms_solver, example2.out and example3.out are parallelized using OpenMP. 
 The number of threads is controlled by the environment variable OMP_NUM_THREADS.
+The file named make_icx is the makefile for Intel compiler. 
+For this code, Intel compiler is about 1.5 times faster than gcc (using gcc version 9.3.0, icx version 2021.4.0). 
 The additional analysis example of single sphere is in the folder analysis_sample1.  
 
 ![point cloud data](ex_particles.png "nodes for surface integral (ex_particles.png)")  
