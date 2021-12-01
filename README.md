@@ -43,7 +43,8 @@ GNU Scientific Library and libpng are required.
    The xz_Ex.gif, yz_Ex.gif and xy_Ex.gif are animated gifs that concatenate the png files created by using the shell script gif_animation.sh.  
    
 Please see exmie_src/emf_mie_ms.h for detail of functions, mfb_src/multi_fbeam.h for detail of incident fields. 
-The mie_ms_solver and example3.out are parallelized using OpenMP. The number of threads is controlled by the environment variable OMP_NUM_THREADS.
+The mie_ms_solver, example2.out and example3.out are parallelized using OpenMP. 
+The number of threads is controlled by the environment variable OMP_NUM_THREADS.
 The additional analysis example of single sphere is in the folder analysis_sample1.  
 
 ![point cloud data](ex_particles.png "nodes for surface integral (ex_particles.png)")  
@@ -67,7 +68,7 @@ The I_example2.png in this folder is the visualization result of electromagnetic
 ![xy_Ex.gif 2](analysis_sample2/xy_Ex.gif "instantaneous value of the E_x on z=0 plane (analysis_sample2/xy_Ex.gif)")  
 
 
-## Analysis sample of radiation force  
+## Analysis sample of radiation force (in the folder analysis_sample3)  
 
 The code in the folder analysis_sample3 is the radiation force analysis program for optical trapping. 
 The usage is 'make' and './radiation_force.out'.
