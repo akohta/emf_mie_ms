@@ -1,0 +1,26 @@
+../mie_ms_solver ex4.dat
+ "fpw.txt" No.00 -- focused plane wave --
+wave length of incident beam in vacuum      :           1.064
+refractive index of surrounding             :               1
+numerical aperture                          :             0.9
+incident beam power                         :               1
+x-component of polarization coefficient     :      1+      0i
+y-component of polarization coefficient     :      0+      0i
+x-component of translation vector           :            -2.9
+y-component of translation vector           :               0
+z-component of translation vector           :               0
+rotation parameter theta               [rad]:               0
+rotation parameter phi                 [rad]:               0
+gauss-legendre integration sampling number  :              64
+
+---- sphere data ( msphr.txt ) ----
+number of spheres                             :                1
+  Sphere ID 0
+radius of sphere                              :           2.4325
+refractive index of sphere                    :     1.6+  1e-06i
+x-coordinate of sphere center                 :                0
+y-coordinate of sphere center                 :                0
+z-coordinate of sphere center                 :                0
+basic sampling number on sphere surface       :               32
+division number for sphere surface    (per PI):                4
+limit of order number l                       :               40
