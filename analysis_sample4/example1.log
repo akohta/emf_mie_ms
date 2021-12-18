@@ -1,4 +1,5 @@
 ../example1.out ex4.dat 
+
  "fpw.txt" No.00 -- focused plane wave --
 wave length of incident beam in vacuum      :           1.064
 refractive index of surrounding             :               1
@@ -67,13 +68,24 @@ Hy =  1.60579156244144e-02 (= 2.61621775168060e+01 [A/m](MKSA))
 Hz = -7.06009745365587e-10 (=-1.15025839709649e-06 [A/m](MSKA))
 
 Radiation force and torque
-Mie coefficient
+Mie coefficients
 sphere id  0, F=( -0.23646238301457,-3.8667434916231e-18, 0.52143317320837 )
            0, N=(  2.4197049353532e-18, 0.00051903541151395,-5.2868354902657e-19 )
            0, F=( -7.8875360838653e-13,-1.2898067941466e-29, 1.7393138462755e-12 ) [ N ](MKSA)
            0, N=(  8.071266874076e-36, 1.7313157741745e-21,-1.763498496772e-36 ) [N m](MKSA)
-Surface integral
-sphere id  0, F=( -0.23646238301457, 1.2323572098699e-17, 0.52143317320837 ) [ N ]
-           0, N=(  3.5007792300681e-17, 0.00051903541152139, 1.7000427707427e-16 ) [N m]
+Surface integral of maxwell stress tensor (verification)
+sphere id  0, F=( -0.23646238301457, 1.2323572098699e-17, 0.52143317320837 )
+           0, N=(  3.5007792300681e-17, 0.00051903541152139, 1.7000427707427e-16 )
            0, F=( -7.8875360838653e-13, 4.1107011767118e-29, 1.7393138462755e-12 ) [ N ](MKSA)
            0, N=(  1.1677342563662e-34, 1.7313157741993e-21, 5.6707322862094e-34 ) [N m](MKSA)
+
+Absorbed energy
+Mie coefficients
+sphere id  0, P= 0.00020201815709839
+           0, P= 2.0201815709839e-07 [W]
+Surface integral of Poynting vector (verification)
+sphere id  0, P= 0.00020201815710142
+           0, P= 2.0201815710142e-07 [W]
+Volume integral of loss by Joulian heat (verification)
+sphere id  0, P= 0.00020201815709832
+           0, P= 2.0201815709832e-07 [W]
