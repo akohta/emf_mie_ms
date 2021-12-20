@@ -120,9 +120,18 @@ Absorbed energy
 Mie coefficients
 sphere id  0, P= 2.6072729033166e-07
            0, P= 2.6072729033166e-10 [W]
+Volume integral of loss by Joulian heat (verification)
+sphere id  0, P= 2.6072729530602e-07
+           0, P= 2.6072729530602e-10 [W]
 Mie coefficients
 sphere id  1, P= 2.6072729033158e-07
            1, P= 2.6072729033158e-10 [W]
+Volume integral of loss by Joulian heat (verification)
+sphere id  1, P= 2.6072729530602e-07
+           1, P= 2.6072729530602e-10 [W]
 Mie coefficients
 sphere id  2, P= 0.00059523641680336
            2, P= 5.9523641680336e-07 [W]
+Volume integral of loss by Joulian heat (verification)
+sphere id  2, P= 0.00059523642587085
+           2, P= 5.9523642587085e-07 [W]
