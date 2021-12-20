@@ -215,6 +215,10 @@ void iterative_ops_ms(MSPD *msp)
     if(sbc==num) break;
   }
 
+  if(nn==ito_max){
+    printf("The maximum number of iterations has been reached (The result has not converged).\n");
+  }
+  
   free(bc);  free(f0);
 }
 
