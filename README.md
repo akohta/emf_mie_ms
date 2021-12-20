@@ -21,7 +21,8 @@ GNU Scientific Library and libpng are required.
    This executable calcluates Mie coefficients, outputs them to binary file with the specified file name.
    This program searches for a sphere datafile in current directory using the default datafile name "msphr.txt". 
    As a simple representation of the analysis model, the nodes used for the surface integral are output as point cloud data. 
-   In this case, the file "ex.particles" is output, and the visualization result is "ex_particle.png" ( using ParaView ). 
+   In this case, the file "ex.particles" is output, and the visualization result is "ex_particle.png".
+   The image was created using gnuplot script "gscript_particles.plt" and converted eps to png by using ImageMagick.  
    
 3. type './example1.out' with an argument of datafile name.   
    For example, './example1.out ex.dat'. 
@@ -30,7 +31,7 @@ GNU Scientific Library and libpng are required.
 4. type './example2.out' with an argument of datafile name.  
    For example, './example2.out ex.dat'. 
    This executable calculates electromagnetic field intensity distributions, outputs them to text files.
-   The I_example2.png is the visualization result of electromagnetic field intensity distributions, created by Gnuplot script gscript_example2.plt
+   The I_example2.png is the visualization result of electromagnetic field intensity distributions, created by gnuplot script gscript_example2.plt
    (converted eps to png by using ImageMagick).  
    
 5. type './example3.out' with an argument of datafile name.  
@@ -106,7 +107,7 @@ Please see com_src/osu_mksa.h and com_src/osu_mksa.c for detail of conversions.
 7. The utilities for manipulating images [ImageMagick](https://imagemagick.org/)  
 8. The official PNG reference library [libpng](http://www.libpng.org/pub/png/libpng.html)  
 9. The electromagnetic field analysis program [multi_fbeam](https://github.com/akohta/multi_fbeam/)  
-10. The data analysis and visualization application [ParaView](https://www.paraview.org/)  
+
 
 The formula (12) in the Reference 2 ( z-component of radiation torque ) is misprinted. The following formula is correct.  
 <img src="https://latex.codecogs.com/gif.latex?\frac{\left<N_z\right>}{a^3E_0^2}=-\frac{a}{8\pi}\sum_{l=1}^{\infty}\sum_{m=-l}^{l}l(l+1)m\left[\epsilon_{\mathrm{ext}}|a_{lm}|^2+|b_{lm}|^2+\Re(\epsilon_{\mathrm{ext}}a_{lm}A_{lm}^*+b_{lm}B_{lm}^*)\right]">.  
