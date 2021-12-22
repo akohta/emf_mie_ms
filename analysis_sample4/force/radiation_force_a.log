@@ -31,7 +31,6 @@ minimum radius          = 2
 radius increase by step = 0.0005
 number of steps         = 1000
 
-output filename         = force_test.txt
+output filename         = force_a.txt
 1000/1000
 Done.
-
