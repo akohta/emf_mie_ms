@@ -15,6 +15,8 @@ TARGET3 =example2.out
 TRGSRC3 =example2.c
 TARGET4 =example3.out
 TRGSRC4 =example3.c
+TARGET5 =example4.out
+TRGSRC5 =example4.c
 
 SRCS1=$(wildcard $(SRCDIR1)/*.c)
 OBJS1=$(addprefix $(OBJDIR)/,$(patsubst %.c,%.o,$(notdir $(SRCS1)) ))
@@ -32,8 +34,9 @@ TRGOBJ1=$(OBJS1) $(OBJS2) $(OBJS3)
 TRGOBJ2=$(filter-out $(OBJDIR)/$(TARGET1).o,$(OBJS1)) $(OBJS2) $(OBJS3) $(patsubst %.c,%.o,$(TRGSRC2))
 TRGOBJ3=$(filter-out $(OBJDIR)/$(TARGET1).o,$(OBJS1)) $(OBJS2) $(OBJS3) $(patsubst %.c,%.o,$(TRGSRC3))
 TRGOBJ4=$(filter-out $(OBJDIR)/$(TARGET1).o,$(OBJS1)) $(OBJS2) $(OBJS3) $(patsubst %.c,%.o,$(TRGSRC4))
+TRGOBJ5=$(filter-out $(OBJDIR)/$(TARGET1).o,$(OBJS1)) $(OBJS2) $(OBJS3) $(patsubst %.c,%.o,$(TRGSRC5))
 
-all : directories $(TARGET1) $(TARGET2) $(TARGET3) $(TARGET4)
+all : directories $(TARGET1) $(TARGET2) $(TARGET3) $(TARGET4) $(TARGET5)
 
 directories:
 	@mkdir -p $(OBJDIR)
@@ -50,6 +53,9 @@ $(TARGET3) : $(TRGOBJ3)
 $(TARGET4) : $(TRGOBJ4)
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS) $(MPFLAGS)
 
+$(TARGET5) : $(TRGOBJ5)
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS) $(MPFLAGS)
+
 $(OBJDIR)/%.o : $(SRCDIR1)/%.c
 	$(CC) $(CFLAGS) -I$(SRCDIR2) -I$(SRCDIR3) -c $< -o $@ $(MPFLAGS)
 
@@ -63,7 +69,7 @@ $(OBJDIR)/%.o : $(SRCDIR3)/%.c
 	$(CC) $(CFLAGS) -I$(SRCDIR1) -I$(SRCDIR2) -I$(SRCDIR3) -c $< $(MPFLAGS)
 
 clean:
-	@rm -rf $(TARGET1) $(TARGET2) $(TARGET3) $(TARGET4) $(OBJDIR) ./*.o
+	@rm -rf $(TARGET1) $(TARGET2) $(TARGET3) $(TARGET4) $(TARGET5) $(OBJDIR) ./*.o
 
 $(OBJS1) : $(HEAD1) $(HEAD2) $(HEAD3)
 $(OBJS2) : $(HEAD2) $(HEAD3)

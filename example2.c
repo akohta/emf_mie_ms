@@ -1,4 +1,4 @@
-// calculation example of electric field intensity distributions
+// calculation example of electromagnetic field intensity distributions
 #include "emf_mie_ms.h"
 
 int main(int argc,char *argv[]) 
@@ -6,14 +6,28 @@ int main(int argc,char *argv[])
   MSPD msp;
   FILE *fp1,*fp2;
   double complex e[3],h[3];
-  double rang,dr,r[3],*ie,*ih;
-  int max,i,j;
+  double rang,dr,r[3],*ie,*ih,mf;
+  int max,i,j,sn;
+
+  if(argc!=2 && argc!=4){
+    printf("Usage : %s datafile_name [sampling_number multplier_factor](optional)\n",argv[0]);
+    printf("default sampling number 200, multiplier factor 4 (range is -4*lambda0 to 4*lambda0)\n");
+    exit(0);
+  }
+  else if(argc==4){
+    sn=atoi(argv[2]);
+    mf=atof(argv[3]);
+  }
+  else{
+    sn=200;
+    mf=4.0;
+  }
 
   read_dat_ms(argv[1],&msp); // read data file
   print_data_ms(&msp); // print data
-  
-  max=200;
-  rang=4.0*msp.bm.lambda_0;
+
+  max=sn;
+  rang=mf*msp.bm.lambda_0;
   dr=rang*2/(double)(max-1);
   
   ie=(double *)m_alloc2(max,sizeof(double),"example2.c,ie");
