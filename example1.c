@@ -127,9 +127,9 @@ int force_torque_integral(int id,double *vf,double *vn,MSPD *msp)
     for(j=0;j<nc;j++){ // theta 0 to pi
       sin_t=sin(xt[j]);      cos_t=cos(xt[j]);
       
-      r[0]=rc*sin_t*cos_p;
-      r[1]=rc*sin_t*sin_p;
-      r[2]=rc*cos_t;
+      r[0]=rc*sin_t*cos_p+msp->sp[id].xs;
+      r[1]=rc*sin_t*sin_p+msp->sp[id].ys;
+      r[2]=rc*cos_t      +msp->sp[id].zs;
       total_EH_ms(e,h,r,msp);
       aex2=creal(e[0]*conj(e[0]));      aey2=creal(e[1]*conj(e[1]));      aez2=creal(e[2]*conj(e[2]));
       ahx2=creal(h[0]*conj(h[0]));      ahy2=creal(h[1]*conj(h[1]));      ahz2=creal(h[2]*conj(h[2]));
@@ -197,9 +197,9 @@ int absorb_energy_poynting(int id,double *P,MSPD *msp)
       n[0]=sin_t*cos_p;
       n[1]=sin_t*sin_p;
       n[2]=cos_t;
-      r[0]=rc*n[0];
-      r[1]=rc*n[1];
-      r[2]=rc*n[2];
+      r[0]=rc*n[0]+msp->sp[id].xs;
+      r[1]=rc*n[1]+msp->sp[id].ys;
+      r[2]=rc*n[2]+msp->sp[id].zs;
       total_EH_ms(e,h,r,msp);
       // poynting vector
       vp[0]=creal(e[1]*conj(h[2])-e[2]*conj(h[1]));
@@ -225,11 +225,6 @@ int absorb_energy_joulian(int id,double *P,MSPD *msp)
 
   *P=0.0;
   
-  if(msp->n_sphr!=1){
-    //printf("this code can analize single sphere only. Return...\n");
-    return 0;
-  }
-    
   gauleg(0.0,M_PI,xt,wt,nc);
   gauleg(0.0,2.0*M_PI,xp,wp,nc*2);
   gauleg(0.0,msp->sp[id].a,xa,wa,nc);
@@ -246,9 +241,9 @@ int absorb_energy_joulian(int id,double *P,MSPD *msp)
         n[0]=sin_t*cos_p;
         n[1]=sin_t*sin_p;
         n[2]=cos_t;
-        r[0]=xa[k]*n[0];
-        r[1]=xa[k]*n[1];
-        r[2]=xa[k]*n[2];
+        r[0]=xa[k]*n[0]+msp->sp[id].xs;
+        r[1]=xa[k]*n[1]+msp->sp[id].ys;
+        r[2]=xa[k]*n[2]+msp->sp[id].zs;
         total_EH_ms(e,h,r,msp);
         // |E|^2
         tp+=creal(e[0]*conj(e[0])+e[1]*conj(e[1])+e[2]*conj(e[2]))*xa[k]*xa[k]*sin_t*wt[j];

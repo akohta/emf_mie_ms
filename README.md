@@ -13,7 +13,8 @@ GNU Scientific Library and libpng are required.
    The example1.out is the executable of source code example1.c, it shows a simplest example using "emf_mie_ms". 
    The example2.out is the executable of source code example2.c, it shows a example of electromagnetic field intensity analysis. 
    The example3.out is the executable of source code example3.c, 
-   it shows a example of outputting the instantaneous value of the electromagnetic field as an image.  
+   it shows a example of outputting the instantaneous value of the electromagnetic field as an image.
+   The example4.out is the executable of source code example4.c, it shows a example of far-field intensity analysis.  
    
 2. type './mie_ms_solver' with an argument of output datafile name.  
    For example, './mie_ms_solver ex.dat'. 
@@ -21,7 +22,8 @@ GNU Scientific Library and libpng are required.
    This executable calcluates Mie coefficients, outputs them to binary file with the specified file name.
    This program searches for a sphere datafile in current directory using the default datafile name "msphr.txt". 
    As a simple representation of the analysis model, the nodes used for the surface integral are output as point cloud data. 
-   In this case, the file "ex.particles" is output, and the visualization result is "ex_particle.png" ( using ParaView ). 
+   In this case, the file "ex.particles" is output, and the visualization result is "ex_particle.png".
+   The image was created using gnuplot script "gscript_particles.plt" and converted eps to png by using ImageMagick.  
    
 3. type './example1.out' with an argument of datafile name.   
    For example, './example1.out ex.dat'. 
@@ -30,7 +32,7 @@ GNU Scientific Library and libpng are required.
 4. type './example2.out' with an argument of datafile name.  
    For example, './example2.out ex.dat'. 
    This executable calculates electromagnetic field intensity distributions, outputs them to text files.
-   The I_example2.png is the visualization result of electromagnetic field intensity distributions, created by Gnuplot script gscript_example2.plt
+   The I_example2.png is the visualization result of electromagnetic field intensity distributions, created by gnuplot script gscript_example2.plt
    (converted eps to png by using ImageMagick).  
    
 5. type './example3.out' with an argument of datafile name.  
@@ -41,6 +43,11 @@ GNU Scientific Library and libpng are required.
    The color bar is output as color_bar.png in the same folder.
    The range of color bar in each cross section is output to the info.txt file (ex. xy_info.txt for z=0 plane).
    The xz_Ex.gif, yz_Ex.gif and xy_Ex.gif are animated gifs that concatenate the png files created by using the shell script gif_animation.sh.  
+   
+6. type './example4.out' with an argument of datafile name.  
+   For example, './example4.out ex.dat'. 
+   This executable calculates far-field intensity distributions and outputs them to text files. 
+   The I_example4.png is the visualization result of electric field intensity distributions, created by gnuplot script gscript_example4.plt.  
    
 Please see exmie_src/emf_mie_ms.h for detail of functions, mfb_src/multi_fbeam.h for detail of incident fields. 
 The mie_ms_solver, example2.out and example3.out are parallelized using OpenMP. 
@@ -53,7 +60,7 @@ The additional analysis example of single sphere is in the folder analysis_sampl
 ![intensity distributions](I_example2.png "intensity distributions (I_example2.png)")  
 ![xz_Ex.gif](xz_Ex.gif "instantaneous value of the E_x on y=0 plane (xz_Ex.gif)")![yz_Ex.gif](yz_Ex.gif "instantaneous value of the E_x on x=0 plane (yz_Ex.gif)")  
 ![xy_Ex.gif](xy_Ex.gif "instantaneous value of the E_x on z=0 plane (xy_Ex.gif)")  
-
+![far-field intensity](I_example4.png "far-field intensity distributions (I_example4.png)")  
 
 
 ## Analysis sample of multi-spheres (in the folder analysis_sample2)
@@ -68,7 +75,7 @@ The I_example2.png in this folder is the visualization result of electromagnetic
 ![intensity distributions 2](analysis_sample2/I_example2.png "intensity distributions (analysis_sample2/I_example2.png)")  
 ![xz_Ex.gif 2](analysis_sample2/xz_Ex.gif "instantaneous value of the E_x on y=0 plane (analysis_sample2/xz_Ex.gif)")![yz_Ex.gif 2](analysis_sample2/yz_Ex.gif "instantaneous value of the E_x on x=0 plane (analysis_sample2/yz_Ex.gif)")  
 ![xy_Ex.gif 2](analysis_sample2/xy_Ex.gif "instantaneous value of the E_x on z=0 plane (analysis_sample2/xy_Ex.gif)")  
-
+![far-field intensity 2](analysis_sample2/I_example4.png "far-field intensity distributions (analysis_sample2/I_example4.png)")  
 
 ## Analysis sample of radiation force (in the folder analysis_sample3)  
 
@@ -106,7 +113,7 @@ Please see com_src/osu_mksa.h and com_src/osu_mksa.c for detail of conversions.
 7. The utilities for manipulating images [ImageMagick](https://imagemagick.org/)  
 8. The official PNG reference library [libpng](http://www.libpng.org/pub/png/libpng.html)  
 9. The electromagnetic field analysis program [multi_fbeam](https://github.com/akohta/multi_fbeam/)  
-10. The data analysis and visualization application [ParaView](https://www.paraview.org/)  
+
 
 The formula (12) in the Reference 2 ( z-component of radiation torque ) is misprinted. The following formula is correct.  
 <img src="https://latex.codecogs.com/gif.latex?\frac{\left<N_z\right>}{a^3E_0^2}=-\frac{a}{8\pi}\sum_{l=1}^{\infty}\sum_{m=-l}^{l}l(l+1)m\left[\epsilon_{\mathrm{ext}}|a_{lm}|^2+|b_{lm}|^2+\Re(\epsilon_{\mathrm{ext}}a_{lm}A_{lm}^*+b_{lm}B_{lm}^*)\right]">.  

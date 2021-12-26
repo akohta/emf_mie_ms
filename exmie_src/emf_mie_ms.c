@@ -215,6 +215,10 @@ void iterative_ops_ms(MSPD *msp)
     if(sbc==num) break;
   }
 
+  if(nn==ito_max){
+    printf("The maximum number of iterations has been reached (The result has not converged).\n");
+  }
+  
   free(bc);  free(f0);
 }
 
@@ -549,8 +553,8 @@ void field_s_ehr(int src,int obj,MSPD *msp)
 void scattered_EH(double complex *e,double complex *h,double *xb,SPD *sp,Bobj *bm)
 {
   double complex er,et,ep,hr,ht,hp,Yp,Ym,dYp,dYm,dep,expi;
-  double r,rxy,r2,cos_t,sin_t,cos_p,sin_p,ker,ke,flag,i_ne,ne,x,y,z,i_sin_t;
-  int l,m,tt,nn,lm,ai;
+  double r,rxy,r2,cos_t,sin_t,cos_p,sin_p,ker,ke,flag,i_ne,ne,x,y,z,i_sin_t,djl,dyl;
+  int l,m,tt,lm,ai;
   size_t ms,lmax=(size_t)sp->l_limit;
   ms=gsl_sf_legendre_array_n(lmax);
   lm=(int)lmax;
@@ -559,6 +563,8 @@ void scattered_EH(double complex *e,double complex *h,double *xb,SPD *sp,Bobj *b
   double *dsphPlm=(double *)m_alloc2(ms,sizeof(double),"scattered_EH(),*dsphPlm");
   double complex *xi =(double complex *)m_alloc2(lm+1,sizeof(double complex),"scattered_EH(),*xi");
   double complex *dxi=(double complex *)m_alloc2(lm+1,sizeof(double complex),"scattered_EH(),*dxi");
+  double *jl=(double *)m_alloc2(lm+2,sizeof(double),"scattered_EH(),*jl");
+  double *yl=(double *)m_alloc2(lm+2,sizeof(double),"scattered_EH(),*yl");
 
   x=xb[0]-sp->xs;  y=xb[1]-sp->ys;  z=xb[2]-sp->zs;
   r2=x*x+y*y+z*z;    r=sqrt(r2);
@@ -576,8 +582,15 @@ void scattered_EH(double complex *e,double complex *h,double *xb,SPD *sp,Bobj *b
   ne=bm->n_0;
   i_ne=1.0/(bm->n_0);
   
-  rcth1d(lm,ker,&nn,xi,dxi);
-  if(nn<sp->ddt.l_max) sp->ddt.l_max=nn;
+  gsl_sf_bessel_jl_array(lm+1,ker,jl);
+  gsl_sf_bessel_yl_array(lm+1,ker,yl);
+  for(l=1;l<=lm;l++){
+    djl=jl[l-1]-(double)(l+1)/ker*jl[l];
+    dyl=yl[l-1]-(double)(l+1)/ker*yl[l];
+    xi[l]=(jl[l]+yl[l]*I)*ker;
+    dxi[l]=jl[l]+ker*djl+(yl[l]+ker*dyl)*I;
+  }
+   
   dep=cos_p+I*sin_p; expi=1.0;
   er=0.0;  et=0.0;  ep=0.0;
   hr=0.0;  ht=0.0;  hp=0.0;
@@ -634,6 +647,7 @@ void scattered_EH(double complex *e,double complex *h,double *xb,SPD *sp,Bobj *b
 
   free(sphPlm);  free(dsphPlm);
   free(xi);      free(dxi);
+  free(jl);      free(yl);
 }
 
 void internal_EH(double complex *e,double complex *h,double *xb,SPD *sp,Bobj *bm)

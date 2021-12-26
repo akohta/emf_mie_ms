@@ -36,14 +36,30 @@ int main(int argc,char *argv[])
 {
   MSPD msp;
   IMD id;
+  double mf;
+  int sn;
+  
+  if(argc!=2 && argc!=4){
+    printf("Usage : %s datafile_name [sampling_number multplier_factor](optional)\n",argv[0]);
+    printf("default sampling number 200, multiplier factor 4 (range is -4*lambda0 to 4*lambda0)\n");
+    exit(0);
+  }
+  else if(argc==4){
+    sn=atoi(argv[2]);
+    mf=atof(argv[3]);
+  }
+  else{
+    sn=200;
+    mf=4.0;
+  }
 
   read_dat_ms(argv[1],&msp); // read data file
   print_data_ms(&msp);       // print data
   
   directory_name(argv[1],id.dir_name); // remove file-extension from argv[1] and add "_images"
   id.scale=1;                          // number for enlarge the output image
-  id.m=200;                            // sampling number 
-  id.rang=4.0*msp.bm.lambda_0;         // range of sampling
+  id.m=sn;                             // sampling number 
+  id.rang=mf*msp.bm.lambda_0;          // range of sampling
   id.ts=40;                            // time step per cycle
   
   make_directory(id.dir_name);
