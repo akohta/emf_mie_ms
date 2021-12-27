@@ -8,7 +8,7 @@ GNU Scientific Library and libpng are required.
 ## Usage of example code
 
 1. type 'make' command to compile.  
-   The executable mie_ms_solver, example1.out, example2.out, example3.out are created. 
+   The executable mie_ms_solver, example1.out, example2.out, example3.out, example4.out are created. 
    The mie_ms_solver is the solver of Mie coefficients. 
    The example1.out is the executable of source code example1.c, it shows a simplest example using "emf_mie_ms". 
    The example2.out is the executable of source code example2.c, it shows a example of electromagnetic field intensity analysis. 
