@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <math.h>
 #include "gauleg.h"
 
 void gauleg(double x1, double x2, double x[], double w[], int n)

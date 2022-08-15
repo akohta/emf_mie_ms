@@ -1,16 +1,9 @@
 #if !defined BSB_H
 #define BSB_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include <complex.h>
-#include <string.h>
-#include "mfb_const.h"
-#include "osu_mksa.h"
-#include "my_utils.h"
 
-typedef struct bsb_data{
+typedef struct bessel_beam_data_t{
   double ki;             // wave number 
   double E0;             // power coefficient
   double complex ex,ey;  // normalized polarization coefficient include initial phase 
@@ -23,7 +16,7 @@ typedef struct bsb_data{
   double *sp;
 }BsbD;
 
-typedef struct bsb{
+typedef struct bessel_beam_t{
   double lambda0;          // wavelength of plane wave in vacuum [m]
   double ni;               // reflactive index of surrounding
   double d_angle;          // deflection angle [rad] (for axicon:=arcsin(n_axi/ni*sin(angle_axi))-angle_axi)

@@ -1,16 +1,9 @@
 #if !defined BSLGB_H
 #define BSLGB_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include <complex.h>
-#include <string.h>
-#include "mfb_const.h"
-#include "osu_mksa.h"
-#include "my_utils.h"
 
-typedef struct bslgb_data{
+typedef struct bessel_lgb_data_t{
   double ki;              // wave number 
   double E0;              // power coefficient
   double complex ex,ey;   // normalized polarization coefficient
@@ -23,7 +16,7 @@ typedef struct bslgb_data{
   double complex *ph_p;    // phase data
 }BsLGbD;
 
-typedef struct bslgb{
+typedef struct bessel_lgb_t{
   double lambda0;          // wavelength of plane wave in vacuum [m]
   double ni;               // reflactive index of surrounding
   double d_angle;          // deflection angle [rad] (axicon prism:=arcsin(n_axi/ni*sin(angle_axi))-angle_axi)

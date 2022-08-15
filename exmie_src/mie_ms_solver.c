@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "emf_mie_ms.h"
 
 int main(int argc, char *argv[])
@@ -7,7 +9,7 @@ int main(int argc, char *argv[])
     printf("Usage : %s 'output datafile name'\n",argv[0]);
     exit(0);
   }
-	
+  
   MSPD msp;
   
   read_data_ms(&msp);
@@ -18,6 +20,7 @@ int main(int argc, char *argv[])
   iterative_ops_ms(&msp);
   
   write_dat_ms(argv[1],&msp);
+  printf("%s is output.\n",argv[1]);
   free_ms(&msp);
 
   return 0;

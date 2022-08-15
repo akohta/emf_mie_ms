@@ -1,3 +1,4 @@
+#include <math.h>
 #include "emf_mie_ms.h"
 
 void  internal_EH(double complex *e,double complex *h,double *xb,SPD *sp,Bobj *bm); // emf_mie_ms.c

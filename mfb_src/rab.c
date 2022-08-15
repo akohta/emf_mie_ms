@@ -1,4 +1,12 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <string.h>
 #include "rab.h"
+#include "mfb_const.h"
+#include "gauleg.h"
+#include "osu_mksa.h"
+#include "my_utils.h"
 
 void calc_rab_EH(double _Complex *e,double _Complex *h,double *x,RAb *rab)
 {

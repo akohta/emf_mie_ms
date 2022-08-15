@@ -1,6 +1,9 @@
 // calculation example of radiation force. 
 // trapping force and trappable point can be analyzed ( single sphere only )
+#include <stdio.h>
+#include <stdlib.h> 
 #include "emf_mie_ms.h"
+#include "osu_mksa.h"
 
 void set_coef(MSPD *msp);
 
@@ -98,4 +101,3 @@ void set_coef(MSPD *msp)
   initialize_eh_r(&(msp->sp[0]),&(msp->bm));
   coefficient(&(msp->sp[0]));
 }
-  

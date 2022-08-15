@@ -1,6 +1,12 @@
 // calculation example using a datafile outputed by 'mie_ms_solver'.
 // verification of radiation force, radiation torque and absorbed energy.
+#include <stdio.h>
+#include <math.h>
 #include "emf_mie_ms.h"
+#include "my_utils.h"
+#include "osu_mksa.h"
+#include "gauleg.h"
+
 
 // radiation force and torque calculated by surface integral of maxwell stress tensor
 int force_torque_integral(int i,double *vf,double *vn,MSPD *msp);
@@ -8,6 +14,7 @@ int force_torque_integral(int i,double *vf,double *vn,MSPD *msp);
 int absorb_energy_poynting(int i,double *P,MSPD *msp);
 // absorbed energy calculated by volume integral of loss by Joulian heat.
 int absorb_energy_joulian(int i,double *P,MSPD *msp);
+
 
 int main(int argc,char *argv[]) 
 {

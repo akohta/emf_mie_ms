@@ -1,9 +1,7 @@
 #if !defined OSU_MKSA_H
 #define OSU_MKSA_H
 
-#include <math.h>
 #include <complex.h>
-#include "physical_constant.h"
 
 // OSU is the system of units optimized for optics 
 // defined as c0 ( speed of light in vacuum ) = 1, mu0 ( permeability of vacuum ) = 1  

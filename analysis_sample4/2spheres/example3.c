@@ -1,4 +1,9 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <string.h>
 #include "emf_mie_ms.h"
+#include "my_utils.h"
 #include <sys/stat.h>
 #include <errno.h>  
 #include <png.h>

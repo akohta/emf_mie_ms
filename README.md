@@ -86,6 +86,13 @@ The radiation_force.png is the visualization result of radiation forces, created
 ![radiation force analysis](analysis_sample3/radiation_force.png "vector plot of radiation force (analysis_sample3/radiation_force.png)")
 
 
+## Analysis sample of Whispering-gallery waves (in the folder analysis_sample4)  
+
+The contents of the folder analysis_sample4 are the analysis results of Whispering-gallery waves.  
+
+![whispering-gallery wave](analysis_sample4/2spheres/xz_Ex.gif "instantaneous value of the E_x on y=0 plane (analysis_sample4/2spheres/xz_Ex.gif)")  
+
+
 ## System of units
 
 This program use the own defined system of units (OSU), optimized for optics. 
@@ -118,3 +125,6 @@ Please see com_src/osu_mksa.h and com_src/osu_mksa.c for detail of conversions.
 The formula (12) in the Reference 2 ( z-component of radiation torque ) is misprinted. The following formula is correct.  
 <img src="https://latex.codecogs.com/gif.latex?\frac{\left<N_z\right>}{a^3E_0^2}=-\frac{a}{8\pi}\sum_{l=1}^{\infty}\sum_{m=-l}^{l}l(l+1)m\left[\epsilon_{\mathrm{ext}}|a_{lm}|^2+|b_{lm}|^2+\Re(\epsilon_{\mathrm{ext}}a_{lm}A_{lm}^*+b_{lm}B_{lm}^*)\right]">.  
 The first letter <img src="https://latex.codecogs.com/gif.latex?l"> in the term of sum is missed.
+
+   
+2022/08/16 Updated multi_fbeam. 1st-order focused Gaussian beams are available.  

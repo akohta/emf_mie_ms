@@ -1,15 +1,8 @@
 #if !defined EMF_MIE_MS_H_
 #define EMF_MIE_MS_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include <complex.h>
-
 #include "multi_fbeam.h"
-#include "rctbess.h"
-#include "gsl/gsl_specfunc.h"
-#include "osu_mksa.h"
 
 // default sphere datafile name
 #define fn_sphr "msphr.txt"

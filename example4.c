@@ -1,6 +1,10 @@
 // calculation example of far-field intensity distributions.
 // radar chart is output for a distant scattering field. 
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #include "emf_mie_ms.h"
+#include "my_utils.h"
 
 int main(int argc,char *argv[]) 
 {

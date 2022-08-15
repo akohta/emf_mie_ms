@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #include "emf_mie_ms.h"
 
 void absorbed_energy_ms(int id,double *p,MSPD *msp)

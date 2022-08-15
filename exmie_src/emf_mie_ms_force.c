@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #include "emf_mie_ms.h"
 
 void  force_ms(int id,double *vf,MSPD *msp)

@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #include "my_utils.h"
 
 void vadd_d(double *r,double *v0,double *v1)

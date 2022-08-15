@@ -1,5 +1,8 @@
 // calculation example of electric field intensity distributions
+#include <stdio.h>
+#include <stdlib.h>
 #include "emf_mie_ms.h"
+#include "my_utils.h"
 
 int main(int argc,char *argv[]) 
 {

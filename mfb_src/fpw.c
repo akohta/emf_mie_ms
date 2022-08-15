@@ -1,5 +1,12 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <string.h>
 #include "fpw.h"
-
+#include "mfb_const.h"
+#include "gauleg.h"
+#include "osu_mksa.h"
+#include "my_utils.h"
 
 void calc_fpw_EH(double complex *e,double complex *h,double *x,Fpw *fpw)
 {
