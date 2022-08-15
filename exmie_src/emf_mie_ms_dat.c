@@ -1,3 +1,13 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "ipw.h"
+#include "fpw.h"
+#include "lgb.h"
+#include "bsb.h"
+#include "bslgb.h"
+#include "rab.h"
+#include "fgb.h"
+#include "my_utils.h"
 #include "emf_mie_ms.h"
 
 void write_dat_ms(char *fn,MSPD *msp)
@@ -34,6 +44,10 @@ void write_dat_ms(char *fn,MSPD *msp)
   }
   if(fwrite(msp->bm.bd.rab,sizeof(RAb),msp->bm.n_rab,fp)!=msp->bm.n_rab){
     printf("emf_mie_ms_dat.c, write_dat_ms(), failed to write rab. exit...\n");
+    exit(1);
+  }
+  if(fwrite(msp->bm.bd.fgb,sizeof(Fgb),msp->bm.n_fgb,fp)!=msp->bm.n_fgb){
+    printf("emf_mie_ms_dat.c, write_dat_ms(), failed to write fgb. exit...\n");
     exit(1);
   }
   // sphere data  
@@ -129,6 +143,11 @@ void  read_dat_ms(char *fn,MSPD *msp)
     printf("emf_mie_ms_dat.c, read_dat_ms(), failed to read rab. exit...\n");
     exit(1);
   }
+  msp->bm.bd.fgb=(Fgb *)m_alloc2(msp->bm.n_fgb,sizeof(Fgb),"read_dat_ms(),msp->bm.bd.fgb");
+  if(fread(msp->bm.bd.fgb,sizeof(Fgb),msp->bm.n_fgb,fp)!=msp->bm.n_fgb){
+    printf("emf_mie_ms_dat.c, read_dat_ms(), failed to read fgb. exit...\n");
+    exit(1);
+  } 
   setup_mfb(&(msp->bm));
   // sphere data
   msp->sp=(SPD *)m_alloc2(msp->n_sphr,sizeof(SPD),"read_dat_ms(),msp->sp");

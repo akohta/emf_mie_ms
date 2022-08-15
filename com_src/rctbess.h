@@ -1,9 +1,6 @@
 #if !defined RTCBESS_H
 #define RTCBESS_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include <complex.h>
 
 // Calculate Riccati-Bessel functions and their derivatives

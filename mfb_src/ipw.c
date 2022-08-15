@@ -1,4 +1,10 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
 #include "ipw.h"
+#include "mfb_const.h"
+#include "osu_mksa.h"
 
 void calc_ipw_EH(double complex *e,double complex *h,double *x,Ipw *ipw)
 {

@@ -1,9 +1,6 @@
 #ifndef MY_UTILS_H_
 #define MY_UTILS_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include <complex.h>
 
 void vadd_d(double *r,double *v0,double *v1);

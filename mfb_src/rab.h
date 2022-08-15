@@ -1,17 +1,9 @@
 #if !defined RAB_H
 #define RAB_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include <complex.h>
-#include <string.h>
-#include "mfb_const.h"
-#include "gauleg.h"
-#include "osu_mksa.h"
-#include "my_utils.h"
 
-typedef struct rab_data{
+typedef struct radial_azimuthal_beam_data_t{
   double ki;             // wave number 
   double E0;             // power coefficient
   double complex er,ea;  // normalized polarization coefficient for electric field     
@@ -28,7 +20,7 @@ typedef struct rab_data{
   double *sp;  
 }RAbD;
 
-typedef struct rab{
+typedef struct radial_azimuthal_beam_t{
   double lambda0;          // wavelength of plane wave in vacuum [m]
   double ni;               // reflactive index of surrounding
   double NA;               // Numerical Aperture

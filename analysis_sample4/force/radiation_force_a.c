@@ -1,6 +1,9 @@
 // calculation example of radiation force.
 // changing the sphere radius.
+#include <stdio.h>
+#include <stdlib.h>
 #include "emf_mie_ms.h"
+#include "osu_mksa.h"
 
 void set_coef(MSPD *msp);
 

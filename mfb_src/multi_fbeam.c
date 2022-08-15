@@ -1,4 +1,18 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <string.h>
 #include "multi_fbeam.h"
+#include "osu_mksa.h"
+#include "my_utils.h"
+#include "ipw.h"
+#include "fpw.h"
+#include "lgb.h"
+#include "bsb.h"  
+#include "bslgb.h" 
+#include "rab.h"
+#include "fgb.h"
+
 
 void init_mfb(Bobj *obj)
 {
@@ -14,7 +28,9 @@ void init_mfb(Bobj *obj)
   obj->bd.blg=(BsLGb *)m_alloc2(0,sizeof(BsLGb),"multi_fbeam.c,init_mfb(),obj->bd.blg");
   obj->n_rab=0;  sprintf(obj->fname_rab,"%s","null");  
   obj->bd.rab=(RAb *)m_alloc2(0,sizeof(RAb),"multi_fbeam.c,init_mfb(),obj->bd.rab"); 
-
+  obj->n_fgb=0;  sprintf(obj->fname_fgb,"%s","null");  
+  obj->bd.fgb=(Fgb *)m_alloc2(0,sizeof(Fgb),"multi_fbeam.c,init_mfb(),obj->bd.fgb"); 
+  
 }
 
 void read_data_mfb(Bobj *obj)
@@ -27,10 +43,11 @@ void read_data_mfb(Bobj *obj)
   wn+=read_data_mfb_bsb(fn_bsb,obj); //
   wn+=read_data_mfb_blg(fn_blg,obj); //
   wn+=read_data_mfb_rab(fn_rab,obj); //
-  
+  wn+=read_data_mfb_fgb(fn_fgb,obj); // 
+
   if(wn==0){   
-    printf("read_data_mfb() No beam defined, check beam data file : %s, %s, %s, %s, %s, %s.\n",
-                fn_ipw,fn_fpw,fn_lgb,fn_bsb,fn_blg,fn_rab);
+    printf("read_data_mfb() No beam defined, check beam data file : %s, %s, %s, %s, %s, %s, %s.\n",
+                fn_ipw,fn_fpw,fn_lgb,fn_bsb,fn_blg,fn_rab,fn_fgb);
     exit(1);
   }
 }
@@ -61,6 +78,10 @@ void print_data_mfb(Bobj *obj)
   // rab
   for(i=0;i<obj->n_rab;i++){
     printf(" \"%s\" No.%02d ",obj->fname_rab,i);    print_data_rab(&(obj->bd.rab[i]));
+  }
+  // fgb
+  for(i=0;i<obj->n_fgb;i++){
+    printf(" \"%s\" No.%02d ",obj->fname_fgb,i);    print_data_fgb(&(obj->bd.fgb[i]));
   }
 
   printf("\n");
@@ -93,6 +114,10 @@ void print_data_mfb_mksa(Bobj *obj)
   for(i=0;i<obj->n_rab;i++){
     printf(" \"%s\" No.%02d ",obj->fname_rab,i);    print_data_rab_mksa(&(obj->bd.rab[i]));
   }
+  // fgb
+  for(i=0;i<obj->n_fgb;i++){
+    printf(" \"%s\" No.%02d ",obj->fname_fgb,i);    print_data_fgb_mksa(&(obj->bd.fgb[i]));
+  }
 
   printf("\n");
 } 
@@ -116,14 +141,16 @@ void setup_mfb(Bobj *obj)
   for(i=0;i<obj->n_blg;i++)      setup_BsLGb(&(obj->bd.blg[i]));
   // rab
   for(i=0;i<obj->n_rab;i++)      setup_rab(&(obj->bd.rab[i]));
-  
+  // fgb
+  for(i=0;i<obj->n_fgb;i++)      setup_fgb(&(obj->bd.fgb[i]));
+
 }
 
 void free_mfb(Bobj *obj)
 {
   int i;
   // ipw
-  free(obj->bd.ipw);  obj->n_ipw=0; 
+  free(obj->bd.ipw);     obj->n_ipw=0; 
   // fpw
   for(i=0;i<obj->n_fpw;i++)  free_Fpw(&(obj->bd.fpw[i]));
   free(obj->bd.fpw);     obj->n_fpw=0; 
@@ -139,7 +166,9 @@ void free_mfb(Bobj *obj)
   // rab
   for(i=0;i<obj->n_rab;i++)  free_rab(&(obj->bd.rab[i]));
   free(obj->bd.rab);     obj->n_rab=0;
-
+  // fgb
+  free(obj->bd.fgb);     obj->n_fgb=0;
+  
 }
 
 int read_data_mfb_ipw(char *fname,Bobj *obj)
@@ -761,6 +790,114 @@ int read_data_mfb_rab(char *fname,Bobj *obj)
   return nn;
 }
 
+int read_data_mfb_fgb(char *fname,Bobj *obj)
+{
+  FILE *fp;
+  if((fp=fopen(fname,"rt"))==NULL){ 
+    //printf("failed to read %s. no beams defined.\n",fname);
+    return 0;
+  }  
+  char buf[256]="";    int i,nn;  double tmpd,tmpd2;
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_fgb(), failed to read the line. exit...\n");
+    exit(1);
+  }
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_fgb(), failed to read the line. exit...\n");
+    exit(1);
+  }
+  
+  sprintf(obj->fname_fgb,"%s",fname); 
+  if(fscanf(fp,"%d\n",&nn)!=1){
+    printf("multi_fbeam.c, read_data_mfb_fgb(), failed to read the nn. exit...\n");
+    exit(1);
+  }
+  if(fgets(buf,256,fp)==NULL){
+    printf("multi_fbeam.c, read_data_mfb_fgb(), failed to read the line. exit...\n");
+    exit(1);
+  }
+  if(nn==0) return 0;
+  
+  free(obj->bd.fgb);
+  obj->n_fgb=nn;     obj->bd.fgb=(Fgb *)m_alloc2(nn,sizeof(Fgb),"multi_fbeam.c,read_data_mfb_fgb(),obj->bd.fgb");
+
+  for(i=0;i<nn;i++){
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fgb(), failed to read the lambda0. exit...\n");
+      exit(1);
+    }
+    obj->bd.fgb[i].lambda0=tmpd;
+          
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fgb(), failed to read the ni. exit...\n");  
+      exit(1);
+    }
+    obj->bd.fgb[i].ni     =tmpd; 
+    
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fgb(), failed to read the omega0. exit...\n");  
+      exit(1);
+    }
+    obj->bd.fgb[i].omega0    =tmpd; 
+    
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fgb(), failed to read the power. exit...\n");
+      exit(1);
+    }
+    obj->bd.fgb[i].power  =tmpd;  
+    
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fgb(), failed to read the real(e0x). exit...\n");
+      exit(1);
+    } 
+    if(fscanf(fp,"%lf",&tmpd2)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fgb(), failed to read the imag(e0x). exit...\n");
+      exit(1);
+    }
+    obj->bd.fgb[i].e0x    =tmpd+I*tmpd2; 
+    
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fgb(), failed to read the read(e0y). exit...\n");
+      exit(1);
+    }
+    if(fscanf(fp,"%lf",&tmpd2)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fgb(), failed to read the imag(e0y). exit...\n");
+      exit(1); 
+    }
+    obj->bd.fgb[i].e0y    =tmpd+I*tmpd2; 
+    
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fgb(), failed to read the fx. exit...\n");
+      exit(1);
+    }
+    obj->bd.fgb[i].fx     =tmpd;
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fgb(), failed to read the fy. exit...\n");
+      exit(1);
+    }
+    obj->bd.fgb[i].fy     =tmpd;
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fgb(), failed to read the fz. exit...\n");
+      exit(1);
+    }
+    obj->bd.fgb[i].fz     =tmpd;         
+    
+    if(fscanf(fp,"%lf",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fgb(), failed to read the theta. exit...\n");
+      exit(1);
+    }
+    obj->bd.fgb[i].theta  =tmpd;
+    if(fscanf(fp,"%lf\n",&tmpd)!=1){
+      printf("multi_fbeam.c, read_data_mfb_fgb(), failed to read the phi. exit...\n");
+      exit(1);
+    }
+    obj->bd.fgb[i].phi    =tmpd;       
+  }
+  
+  fclose(fp);
+  return nn;
+}
+
 void calc_mfb_EH(double complex *e,double complex *h,double *x,Bobj *obj)
 {
   double complex te[3],th[3];
@@ -796,7 +933,6 @@ void calc_mfb_EH(double complex *e,double complex *h,double *x,Bobj *obj)
       e[j]+=te[j];      h[j]+=th[j];
     }
   }
-  
   // blg
   for(i=0;i<obj->n_blg;i++){
     calc_bslgb_EH(te,th,x,&(obj->bd.blg[i]));
@@ -807,6 +943,13 @@ void calc_mfb_EH(double complex *e,double complex *h,double *x,Bobj *obj)
   // rab
   for(i=0;i<obj->n_rab;i++){
     calc_rab_EH(te,th,x,&(obj->bd.rab[i]));
+    for(j=0;j<3;j++){
+      e[j]+=te[j];      h[j]+=th[j];
+    }
+  }
+  // fgb
+  for(i=0;i<obj->n_fgb;i++){
+    calc_fgb_EH(te,th,x,&(obj->bd.fgb[i]));
     for(j=0;j<3;j++){
       e[j]+=te[j];      h[j]+=th[j];
     }
@@ -871,7 +1014,45 @@ void calc_mfb_EH_dv(double complex *e,double complex *h,double complex *dedv,dou
       dedv[j]+=tde[j];    dhdv[j]+=tdh[j];
     }
   }
+  // fgb
+  for(i=0;i<obj->n_fgb;i++){
+    calc_fgb_EH_dv(te,th,tde,tdh,x,v,&(obj->bd.fgb[i]));
+    for(j=0;j<3;j++){
+      e[j]+=te[j];    h[j]+=th[j];
+      dedv[j]+=tde[j];    dhdv[j]+=tdh[j];
+    }
+  }
 
+}
+
+void calc_mfb_EH_mksa(double complex *em,double complex *hm,double *xm,Bobj *obj)
+{
+  double complex e[3],h[3];
+  double x[3];
+  int i;
+  
+  for(i=0;i<3;i++) x[i]=MKSAtoOSU_length(xm[i]);
+  calc_mfb_EH(e,h,x,obj);
+  for(i=0;i<3;i++){
+    em[i]=OSUtoMKSA_ElectricField(e[i]);
+    hm[i]=OSUtoMKSA_MagneticField(h[i]);
+  }
+}
+
+void calc_mfb_EH_dv_mksa(double complex *em,double complex *hm,double complex *demdv,double complex *dhmdv,double *xm,double *v,Bobj *obj)
+{
+  double complex e[3],h[3],dev[3],dhv[3];
+  double x[3];
+  int i;
+  
+  for(i=0;i<3;i++) x[i]=MKSAtoOSU_length(xm[i]);
+  calc_mfb_EH_dv(e,h,dev,dhv,x,v,obj);
+  for(i=0;i<3;i++){
+    em[i]=OSUtoMKSA_ElectricField(e[i]);
+    hm[i]=OSUtoMKSA_MagneticField(h[i]);
+    demdv[i]=OSUtoMKSA_dEdv(dev[i]);
+    dhmdv[i]=OSUtoMKSA_dHdv(dhv[i]);
+  }
 }
 
 ////////////////////////////////////////////////////////////
@@ -953,9 +1134,21 @@ void check_data_mfb(Bobj *obj)
       if(obj->lambda_0!=obj->bd.rab[i].lambda0){ printf("data error rab lambda0, exit\n"); exit(1);}
     }
   }
+  // fgb
+  for(i=0;i<obj->n_fgb;i++){
+    if(st==0){
+      obj->n_0     =obj->bd.fgb[i].ni;
+      obj->lambda_0=obj->bd.fgb[i].lambda0;
+      st++;
+    }
+    else {
+      if(obj->n_0     !=obj->bd.fgb[i].ni     ){ printf("data error fgb ni, exit\n");     exit(1);}
+      if(obj->lambda_0!=obj->bd.fgb[i].lambda0){ printf("data error fgb lambda0, exit\n"); exit(1);}
+    }
+  }
   
   if(st==0){
-    printf("no beams defined. check datafile name. Exit...\n");
+    printf("no beams defined. check the datafile. Exit...\n");
     exit(0);
   }
   obj->omega=2.0*M_PI/obj->lambda_0;

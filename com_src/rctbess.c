@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #include "rctbess.h"
 
 int msta1(double x,int mp)

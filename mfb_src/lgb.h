@@ -1,17 +1,9 @@
 #if !defined LGB_H
 #define LGB_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include <complex.h>
-#include <string.h>
-#include "mfb_const.h"
-#include "gauleg.h"
-#include "osu_mksa.h"
-#include "my_utils.h"
 
-typedef struct lgb_data{
+typedef struct laguerre_gaussian_beam_data_t{
   double ki;            // wave number 
   double E0;            // power coefficient
   double complex ex,ey; // normalized polarization coefficient for electric field
@@ -28,7 +20,7 @@ typedef struct lgb_data{
   double complex *ph_p;
 }LGbD;
 
-typedef struct lgb{
+typedef struct laguerre_gaussian_beam_t{
   double lambda0;          // wavelength of plane wave in vacuum [m]
   double ni;               // reflactive index of surrounding
   double NA;               // Numerical Aperture

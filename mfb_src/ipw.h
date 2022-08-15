@@ -1,15 +1,9 @@
 #if !defined IPW_H
 #define IPW_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
 #include <complex.h>
-#include "mfb_const.h"
-#include "osu_mksa.h"
 
-typedef struct incident_planewave_data{
+typedef struct incident_planewave_data_t{
   double E0;           // power coefficient
   double ki;           // wave number 
   double cos_t,sin_t;  // cos(theta),sin(theta)
@@ -19,7 +13,7 @@ typedef struct incident_planewave_data{
   double complex hx,hy,hz;  // normalized magnetic field vector
 }IpwD;
 
-typedef struct incident_planewave{
+typedef struct incident_planewave_t{
   double lambda0;       // wavelength of plane wave in vacuum [m]
   double ni;            // reflactive index of surroundings
   double power;         // planewave power [W/m^2]

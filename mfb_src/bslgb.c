@@ -1,4 +1,11 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <string.h>
 #include "bslgb.h"
+#include "mfb_const.h"
+#include "osu_mksa.h"
+#include "my_utils.h"
 
 void calc_bslgb_EH(double _Complex *e,double _Complex *h,double *x,BsLGb *bsb)
 {

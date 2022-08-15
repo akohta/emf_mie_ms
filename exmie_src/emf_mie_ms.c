@@ -1,3 +1,12 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include "gauleg.h"
+#include "my_utils.h"
+#include "osu_mksa.h"
+#include "rctbess.h"
+#include "gsl/gsl_specfunc.h"
 #include "emf_mie_ms.h"
 
 void  read_data_ms(MSPD *msp)

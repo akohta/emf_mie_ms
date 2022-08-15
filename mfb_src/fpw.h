@@ -1,18 +1,9 @@
 #if !defined FPW_H
 #define FPW_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include <complex.h>
-#include <string.h>
-#include "mfb_const.h"
-#include "gauleg.h"
-#include "osu_mksa.h"
-#include "my_utils.h"
 
-
-typedef struct fpw_data{
+typedef struct focused_plane_wave_data_t{
   double ki;            // wave number 
   double E0;            // power coefficient
   double complex ex,ey; // normalized polarization coefficient for electric field 
@@ -28,7 +19,7 @@ typedef struct fpw_data{
 
 }FpwD;
 
-typedef struct fpw{
+typedef struct focused_plahe_wave_t{
   double lambda0;          // wavelength of plane wave in vacuum [m]
   double ni;               // reflactive index of surrounding
   double NA;               // Numerical Aperture

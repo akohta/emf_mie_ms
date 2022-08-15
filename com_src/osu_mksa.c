@@ -1,4 +1,6 @@
+#include <math.h>
 #include "osu_mksa.h"
+#include "physical_constant.h"
 
 // OSU to MKSA conversion
 double OSUtoMKSA_length(double x)
